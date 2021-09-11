@@ -1,0 +1,19 @@
+@page "/"
+@using Microsoft.Identity.Web
+@using Microsoft.Extensions.Options
+@inject IOptionsMonitor<MicrosoftIdentityOptions> microsoftIdentityOptions
+
+<h1>Wargamer Showcase</h1>
+
+<AuthorizeView>
+    <Authorized>
+        @foreach(var claim in context.User.Claims)
+        {   
+            <text> @claim.Value </text>
+        }
+    </Authorized>
+    <NotAuthorized>
+        <text>Login to see claims</text>
+    </NotAuthorized>
+</AuthorizeView>
+
