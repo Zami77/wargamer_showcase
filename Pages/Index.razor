@@ -7,13 +7,18 @@
 
 <AuthorizeView>
     <Authorized>
-        @foreach(var claim in context.User.Claims)
+        @foreach (var claim in context.User.Claims)
         {   
-            <text> @claim.Value </text>
+            if (claim.Type is "newUser" && claim.Value is "true")
+            {
+                <text> Thanks for joining Wargamer Showcase, @context.User.GetDisplayName()! </text>
+                // TODO: Add user to user database
+            }
         }
+
     </Authorized>
     <NotAuthorized>
-        <text>Login to see claims</text>
+        <text>Login to inventory paint and upload Minis!</text>
     </NotAuthorized>
 </AuthorizeView>
 
