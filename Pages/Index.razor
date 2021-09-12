@@ -10,14 +10,15 @@
 <AuthorizeView>
     <Authorized>
         @foreach (var claim in context.User.Claims)
-        {   
+        {
             if (claim.Type is "newUser" && claim.Value is "true")
             {
                 <text> Thanks for joining Wargamer Showcase, @context.User.GetDisplayName()! </text>
-                addNewUser(context.User.GetDisplayName());
+                isNewUser = true;
+                newUsername = context.User.GetDisplayName();
+                break;
             }
         }
-
     </Authorized>
     <NotAuthorized>
         <text>Login to inventory paint and upload Minis!</text>
@@ -25,12 +26,25 @@
 </AuthorizeView>
 
 @code {
-    private async Task addNewUser(string username) 
-    {
-        // TODO: add only one user, check for username
-        User newUser = new User(username);
-        await cosmosDbService.AddUserAsync(newUser);
-        logger.LogInformation("Added user to cosmos");
-    }
-} 
+    bool isNewUser = false;
+    string newUsername = "";
 
+    private async Task addNewUser(string username)
+    {
+        var userExists = await cosmosDbService.UserExistsAsync(username);
+        if (!userExists)
+        {
+            User newUser = new User(username);
+            await cosmosDbService.AddUserAsync(newUser);
+            logger.LogInformation("Added user to cosmos");
+        }
+    }
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        if (isNewUser && newUsername.Length > 0)
+        {
+            isNewUser = false;
+            await addNewUser(newUsername);
+        }
+    }
+}

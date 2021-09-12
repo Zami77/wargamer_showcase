@@ -10,7 +10,7 @@ namespace wargamer_showcase.Data
     {
         public User(string username)
         {
-            Id = Guid.NewGuid().ToString();
+            Id = username;
             Username = username;
         }
         [JsonProperty(PropertyName = "id")]

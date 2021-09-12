@@ -46,7 +46,7 @@ namespace wargamer_showcase.Data
         public async Task<IEnumerable<User>> GetUsersAsync(string queryString)
         {
             var query = this._container.GetItemQueryIterator<User>(new QueryDefinition(queryString));
-            List<User> results = new List<User>();
+            List<User> results = new();
             while (query.HasMoreResults)
             {
                 var response = await query.ReadNextAsync();
@@ -55,6 +55,13 @@ namespace wargamer_showcase.Data
             }
 
             return results;
+        }
+
+        public async Task<bool> UserExistsAsync(string username)
+        {
+            var query = $"SELECT * FROM c WHERE c.username ='{username}'";
+            var response = await GetUsersAsync(query);
+            return response.Count() > 0;
         }
 
         public async Task UpdateUserAsync(string id, User user)

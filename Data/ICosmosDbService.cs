@@ -12,5 +12,6 @@ namespace wargamer_showcase.Data
         Task AddUserAsync(User user);
         Task UpdateUserAsync(string id, User user);
         Task DeleteUserAsync(string id);
+        Task<bool> UserExistsAsync(string username);
     }
 }
