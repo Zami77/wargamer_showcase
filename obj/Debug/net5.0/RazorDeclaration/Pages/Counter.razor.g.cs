@@ -13,70 +13,70 @@ namespace wargamer_showcase.Pages
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
 #nullable restore
-#line 1 "C:\GitHub\wargamer_showcase\_Imports.razor"
+#line 1 "D:\chunk\Documents\GitHub\wargamer_showcase\_Imports.razor"
 using System.Net.Http;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "C:\GitHub\wargamer_showcase\_Imports.razor"
+#line 2 "D:\chunk\Documents\GitHub\wargamer_showcase\_Imports.razor"
 using Microsoft.AspNetCore.Authorization;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "C:\GitHub\wargamer_showcase\_Imports.razor"
+#line 3 "D:\chunk\Documents\GitHub\wargamer_showcase\_Imports.razor"
 using Microsoft.AspNetCore.Components.Authorization;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 4 "C:\GitHub\wargamer_showcase\_Imports.razor"
+#line 4 "D:\chunk\Documents\GitHub\wargamer_showcase\_Imports.razor"
 using Microsoft.AspNetCore.Components.Forms;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 5 "C:\GitHub\wargamer_showcase\_Imports.razor"
+#line 5 "D:\chunk\Documents\GitHub\wargamer_showcase\_Imports.razor"
 using Microsoft.AspNetCore.Components.Routing;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 6 "C:\GitHub\wargamer_showcase\_Imports.razor"
+#line 6 "D:\chunk\Documents\GitHub\wargamer_showcase\_Imports.razor"
 using Microsoft.AspNetCore.Components.Web;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 7 "C:\GitHub\wargamer_showcase\_Imports.razor"
+#line 7 "D:\chunk\Documents\GitHub\wargamer_showcase\_Imports.razor"
 using Microsoft.AspNetCore.Components.Web.Virtualization;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 8 "C:\GitHub\wargamer_showcase\_Imports.razor"
+#line 8 "D:\chunk\Documents\GitHub\wargamer_showcase\_Imports.razor"
 using Microsoft.JSInterop;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 9 "C:\GitHub\wargamer_showcase\_Imports.razor"
+#line 9 "D:\chunk\Documents\GitHub\wargamer_showcase\_Imports.razor"
 using wargamer_showcase;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 10 "C:\GitHub\wargamer_showcase\_Imports.razor"
+#line 10 "D:\chunk\Documents\GitHub\wargamer_showcase\_Imports.razor"
 using wargamer_showcase.Shared;
 
 #line default
@@ -91,7 +91,7 @@ using wargamer_showcase.Shared;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 9 "C:\GitHub\wargamer_showcase\Pages\Counter.razor"
+#line 9 "D:\chunk\Documents\GitHub\wargamer_showcase\Pages\Counter.razor"
        
     private int currentCount = 0;
 
