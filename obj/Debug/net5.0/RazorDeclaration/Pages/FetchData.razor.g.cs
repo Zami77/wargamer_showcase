@@ -63,20 +63,27 @@ using Microsoft.AspNetCore.Components.Web.Virtualization;
 #nullable disable
 #nullable restore
 #line 8 "D:\chunk\Documents\GitHub\wargamer_showcase\_Imports.razor"
-using Microsoft.JSInterop;
+using Microsoft.Extensions.Logging;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 9 "D:\chunk\Documents\GitHub\wargamer_showcase\_Imports.razor"
-using wargamer_showcase;
+using Microsoft.JSInterop;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 10 "D:\chunk\Documents\GitHub\wargamer_showcase\_Imports.razor"
+using wargamer_showcase;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 11 "D:\chunk\Documents\GitHub\wargamer_showcase\_Imports.razor"
 using wargamer_showcase.Shared;
 
 #line default

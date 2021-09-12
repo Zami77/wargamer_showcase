@@ -63,21 +63,35 @@ using Microsoft.AspNetCore.Components.Web.Virtualization;
 #nullable disable
 #nullable restore
 #line 8 "D:\chunk\Documents\GitHub\wargamer_showcase\_Imports.razor"
-using Microsoft.JSInterop;
+using Microsoft.Extensions.Logging;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 9 "D:\chunk\Documents\GitHub\wargamer_showcase\_Imports.razor"
-using wargamer_showcase;
+using Microsoft.JSInterop;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 10 "D:\chunk\Documents\GitHub\wargamer_showcase\_Imports.razor"
+using wargamer_showcase;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 11 "D:\chunk\Documents\GitHub\wargamer_showcase\_Imports.razor"
 using wargamer_showcase.Shared;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 12 "D:\chunk\Documents\GitHub\wargamer_showcase\_Imports.razor"
+using wargamer_showcase.Data;
 
 #line default
 #line hidden
@@ -104,6 +118,21 @@ using Microsoft.Extensions.Options;
         {
         }
         #pragma warning restore 1998
+#nullable restore
+#line 27 "D:\chunk\Documents\GitHub\wargamer_showcase\Pages\Index.razor"
+       
+    private async Task addNewUser(string username) 
+    {
+        User newUser = new User(username);
+        await cosmosDbService.AddUserAsync(newUser);
+        logger.LogInformation("Added user to cosmos");
+    }
+
+#line default
+#line hidden
+#nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private ILogger<Index> logger { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private ICosmosDbService cosmosDbService { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IOptionsMonitor<MicrosoftIdentityOptions> microsoftIdentityOptions { get; set; }
     }
 }

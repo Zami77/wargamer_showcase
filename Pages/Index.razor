@@ -2,6 +2,8 @@
 @using Microsoft.Identity.Web
 @using Microsoft.Extensions.Options
 @inject IOptionsMonitor<MicrosoftIdentityOptions> microsoftIdentityOptions
+@inject ICosmosDbService cosmosDbService
+@inject ILogger<Index> logger
 
 <h1>Wargamer Showcase</h1>
 
@@ -12,7 +14,7 @@
             if (claim.Type is "newUser" && claim.Value is "true")
             {
                 <text> Thanks for joining Wargamer Showcase, @context.User.GetDisplayName()! </text>
-                // TODO: Add user to user database
+                addNewUser(context.User.GetDisplayName());
             }
         }
 
@@ -21,4 +23,14 @@
         <text>Login to inventory paint and upload Minis!</text>
     </NotAuthorized>
 </AuthorizeView>
+
+@code {
+    private async Task addNewUser(string username) 
+    {
+        // TODO: add only one user, check for username
+        User newUser = new User(username);
+        await cosmosDbService.AddUserAsync(newUser);
+        logger.LogInformation("Added user to cosmos");
+    }
+} 
 

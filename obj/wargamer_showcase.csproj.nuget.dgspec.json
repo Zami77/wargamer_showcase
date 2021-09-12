@@ -59,6 +59,10 @@
                 "NU1605"
               ]
             },
+            "Microsoft.Azure.Cosmos": {
+              "target": "Package",
+              "version": "[3.21.0, )"
+            },
             "Microsoft.Identity.Web": {
               "target": "Package",
               "version": "[1.1.0, )"

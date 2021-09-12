@@ -161,3 +161,14 @@ D:\chunk\Documents\GitHub\wargamer_showcase\obj\Debug\net5.0\wargamer_showcase.d
 D:\chunk\Documents\GitHub\wargamer_showcase\obj\Debug\net5.0\ref\wargamer_showcase.dll
 D:\chunk\Documents\GitHub\wargamer_showcase\obj\Debug\net5.0\wargamer_showcase.pdb
 D:\chunk\Documents\GitHub\wargamer_showcase\obj\Debug\net5.0\wargamer_showcase.genruntimeconfig.cache
+D:\chunk\Documents\GitHub\wargamer_showcase\bin\Debug\net5.0\Microsoft.Azure.Cosmos.ServiceInterop.dll
+D:\chunk\Documents\GitHub\wargamer_showcase\bin\Debug\net5.0\Cosmos.CRTCompat.dll
+D:\chunk\Documents\GitHub\wargamer_showcase\bin\Debug\net5.0\Microsoft.Azure.Cosmos.Client.dll
+D:\chunk\Documents\GitHub\wargamer_showcase\bin\Debug\net5.0\Microsoft.Azure.Cosmos.Core.dll
+D:\chunk\Documents\GitHub\wargamer_showcase\bin\Debug\net5.0\Microsoft.Azure.Cosmos.Direct.dll
+D:\chunk\Documents\GitHub\wargamer_showcase\bin\Debug\net5.0\Microsoft.Azure.Cosmos.Serialization.HybridRow.dll
+D:\chunk\Documents\GitHub\wargamer_showcase\bin\Debug\net5.0\Microsoft.Bcl.HashCode.dll
+D:\chunk\Documents\GitHub\wargamer_showcase\bin\Debug\net5.0\Newtonsoft.Json.dll
+D:\chunk\Documents\GitHub\wargamer_showcase\bin\Debug\net5.0\System.Configuration.ConfigurationManager.dll
+D:\chunk\Documents\GitHub\wargamer_showcase\bin\Debug\net5.0\runtimes\win-x64\native\Cosmos.CRTCompat.dll
+D:\chunk\Documents\GitHub\wargamer_showcase\bin\Debug\net5.0\runtimes\win-x64\native\Microsoft.Azure.Cosmos.ServiceInterop.dll
