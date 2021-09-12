@@ -8,15 +8,24 @@ namespace wargamer_showcase.Data
 {
     public class User
     {
-        public User(string username)
+        public User()
         {
-            Id = username;
-            Username = username;
+            Id = Guid.NewGuid().ToString();
         }
+
+        public User(string username, string email)
+        {
+            Id = Guid.NewGuid().ToString();
+            Username = username;
+            Email = email;
+        }
+
         [JsonProperty(PropertyName = "id")]
         public String Id { get; set; }
         [JsonProperty(PropertyName = "username")]
         public String Username { get; set; }
+        [JsonProperty(PropertyName = "email")]
+        public String Email { get; set; }
 
     }
 }

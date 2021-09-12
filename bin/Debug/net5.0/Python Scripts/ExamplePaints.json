@@ -1,0 +1,20 @@
+[
+    {
+        "id": "White Scar",
+        "paint_name": "White Scar",
+        "company": "Citadel",
+        "hex_color": "FFFFFF",
+        "color_conversions": [
+            "Skull White 1",
+            "DeadWhite",
+            "White",
+            "Arctic White",
+            "Eternal White",
+            "Pure White",
+            "Morrow white",
+            "White",
+            "Matt White",
+            "White Matt"
+        ]
+    }
+]

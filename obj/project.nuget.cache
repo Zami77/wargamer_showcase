@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "PUa17sGhNSiuJvWwIy0qqFsUKN9Wqd3l2pkdFwgl8pWF1Jy6gxTea25qA4AwNw9k9AlrYmCQAEh9RKJnxFIeKQ==",
+  "dgSpecHash": "NVlrjtOr5bhJatJHsU2wTR/yCwmRarpeb5au3ecL4853PZsebroizsj/Yej2yt/uugqfj26Jt5jv57JpgDg70w==",
   "success": true,
-  "projectFilePath": "C:\\GitHub\\wargamer_showcase\\wargamer_showcase.csproj",
+  "projectFilePath": "D:\\chunk\\Documents\\GitHub\\wargamer_showcase\\wargamer_showcase.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\chunk\\.nuget\\packages\\azure.core\\1.4.1\\azure.core.1.4.1.nupkg.sha512",
     "C:\\Users\\chunk\\.nuget\\packages\\azure.identity\\1.2.3\\azure.identity.1.2.3.nupkg.sha512",

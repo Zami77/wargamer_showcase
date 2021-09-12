@@ -11,14 +11,24 @@
     <Authorized>
         @foreach (var claim in context.User.Claims)
         {
-            if (claim.Type is "newUser" && claim.Value is "true")
+            if (claim.Type is "emails")
             {
-                <text> Thanks for joining Wargamer Showcase, @context.User.GetDisplayName()! </text>
-                isNewUser = true;
-                newUsername = context.User.GetDisplayName();
+                curEmail = claim.Value;
                 break;
             }
         }
+        @foreach (var claim in context.User.Claims)
+        {
+            if (claim.Type is "newUser" && claim.Value is "true")
+            {
+                loginMsg =  "Thanks for joining Wargamer Showcase";
+                isNewUser = true;
+                newUsername = context.User.GetDisplayName();
+                
+                break;
+            }
+        }
+        <text>@loginMsg, @context.User.GetDisplayName()!</text>
     </Authorized>
     <NotAuthorized>
         <text>Login to inventory paint and upload Minis!</text>
@@ -28,20 +38,22 @@
 @code {
     bool isNewUser = false;
     string newUsername = "";
+    string curEmail = "";
+    string loginMsg = "Welcome back to Wargamer Showcase";
 
     private async Task addNewUser(string username)
     {
         var userExists = await cosmosDbService.UserExistsAsync(username);
         if (!userExists)
         {
-            User newUser = new User(username);
+            User newUser = new User(username, curEmail);
             await cosmosDbService.AddUserAsync(newUser);
             logger.LogInformation("Added user to cosmos");
         }
     }
     protected override async void OnAfterRender(bool firstRender)
     {
-        if (isNewUser && newUsername.Length > 0)
+        if (isNewUser && newUsername.Length > 0 && curEmail.Length > 0)
         {
             isNewUser = false;
             await addNewUser(newUsername);

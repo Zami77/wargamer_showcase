@@ -13,98 +13,98 @@ namespace wargamer_showcase.Pages
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
 #nullable restore
-#line 1 "C:\GitHub\wargamer_showcase\_Imports.razor"
+#line 1 "D:\chunk\Documents\GitHub\wargamer_showcase\_Imports.razor"
 using System.Net.Http;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "C:\GitHub\wargamer_showcase\_Imports.razor"
+#line 2 "D:\chunk\Documents\GitHub\wargamer_showcase\_Imports.razor"
 using Microsoft.AspNetCore.Authorization;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "C:\GitHub\wargamer_showcase\_Imports.razor"
+#line 3 "D:\chunk\Documents\GitHub\wargamer_showcase\_Imports.razor"
 using Microsoft.AspNetCore.Components.Authorization;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 4 "C:\GitHub\wargamer_showcase\_Imports.razor"
+#line 4 "D:\chunk\Documents\GitHub\wargamer_showcase\_Imports.razor"
 using Microsoft.AspNetCore.Components.Forms;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 5 "C:\GitHub\wargamer_showcase\_Imports.razor"
+#line 5 "D:\chunk\Documents\GitHub\wargamer_showcase\_Imports.razor"
 using Microsoft.AspNetCore.Components.Routing;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 6 "C:\GitHub\wargamer_showcase\_Imports.razor"
+#line 6 "D:\chunk\Documents\GitHub\wargamer_showcase\_Imports.razor"
 using Microsoft.AspNetCore.Components.Web;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 7 "C:\GitHub\wargamer_showcase\_Imports.razor"
+#line 7 "D:\chunk\Documents\GitHub\wargamer_showcase\_Imports.razor"
 using Microsoft.AspNetCore.Components.Web.Virtualization;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 8 "C:\GitHub\wargamer_showcase\_Imports.razor"
+#line 8 "D:\chunk\Documents\GitHub\wargamer_showcase\_Imports.razor"
 using Microsoft.Extensions.Logging;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 9 "C:\GitHub\wargamer_showcase\_Imports.razor"
+#line 9 "D:\chunk\Documents\GitHub\wargamer_showcase\_Imports.razor"
 using Microsoft.JSInterop;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 10 "C:\GitHub\wargamer_showcase\_Imports.razor"
+#line 10 "D:\chunk\Documents\GitHub\wargamer_showcase\_Imports.razor"
 using wargamer_showcase;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 11 "C:\GitHub\wargamer_showcase\_Imports.razor"
+#line 11 "D:\chunk\Documents\GitHub\wargamer_showcase\_Imports.razor"
 using wargamer_showcase.Shared;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 12 "C:\GitHub\wargamer_showcase\_Imports.razor"
+#line 12 "D:\chunk\Documents\GitHub\wargamer_showcase\_Imports.razor"
 using wargamer_showcase.Data;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "C:\GitHub\wargamer_showcase\Pages\Index.razor"
+#line 2 "D:\chunk\Documents\GitHub\wargamer_showcase\Pages\Index.razor"
 using Microsoft.Identity.Web;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "C:\GitHub\wargamer_showcase\Pages\Index.razor"
+#line 3 "D:\chunk\Documents\GitHub\wargamer_showcase\Pages\Index.razor"
 using Microsoft.Extensions.Options;
 
 #line default
@@ -119,24 +119,26 @@ using Microsoft.Extensions.Options;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 28 "C:\GitHub\wargamer_showcase\Pages\Index.razor"
+#line 38 "D:\chunk\Documents\GitHub\wargamer_showcase\Pages\Index.razor"
        
     bool isNewUser = false;
     string newUsername = "";
+    string curEmail = "";
+    string loginMsg = "Welcome back to Wargamer Showcase";
 
     private async Task addNewUser(string username)
     {
         var userExists = await cosmosDbService.UserExistsAsync(username);
         if (!userExists)
         {
-            User newUser = new User(username);
+            User newUser = new User(username, curEmail);
             await cosmosDbService.AddUserAsync(newUser);
             logger.LogInformation("Added user to cosmos");
         }
     }
     protected override async void OnAfterRender(bool firstRender)
     {
-        if (isNewUser && newUsername.Length > 0)
+        if (isNewUser && newUsername.Length > 0 && curEmail.Length > 0)
         {
             isNewUser = false;
             await addNewUser(newUsername);
