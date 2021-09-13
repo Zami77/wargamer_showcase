@@ -1,0 +1,52 @@
+﻿@page "/paintconversion"
+@using Microsoft.Identity.Web
+@using Microsoft.Extensions.Options
+@inject IOptionsMonitor<MicrosoftIdentityOptions> microsoftIdentityOptions
+@inject ICosmosDbService cosmosDbService
+@inject ILogger<PaintConversion> logger
+
+<h2>PaintConversion</h2>
+
+<EditForm Model="@selectedPaint" OnValidSubmit="HandleValidSubmit">
+    <input type="text" 
+           list="paint-search" 
+           placeholder="Search for a paint" 
+           @bind-value="selectedPaint.PaintName"/>
+    <datalist id="paint-search">
+        @foreach (var paint in allPaints)
+        {
+            <option>@paint.PaintName</option>
+        }
+    </datalist>
+    <button type="submit">Convert</button>
+</EditForm>
+@if (paintConverted)
+{
+    <h3>
+        Converted Paints
+    </h3>
+    <ul>
+        @foreach (var convertedPaint in selectedPaint.ColorConversions)
+        {
+            <li>@convertedPaint</li>
+        }
+    </ul>
+}
+@code {
+    List<Paint> allPaints = new();
+    Paint selectedPaint = new();
+    bool paintConverted = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await cosmosDbService.GetAllPaintsAsync();
+        allPaints = response.ToList();
+    }
+
+    private void HandleValidSubmit()
+    {
+        selectedPaint = allPaints.Find(p => p.PaintName == selectedPaint.PaintName);
+        logger.LogInformation($"Found paint conversions\n{selectedPaint.ColorConversions}");
+        paintConverted = true;
+    }
+}

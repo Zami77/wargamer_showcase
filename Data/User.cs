@@ -26,6 +26,14 @@ namespace wargamer_showcase.Data
         public String Username { get; set; }
         [JsonProperty(PropertyName = "email")]
         public String Email { get; set; }
+        [JsonProperty(PropertyName = "paints")]
+        public List<PaintInventory> Paints { get; set; } = new List<PaintInventory>();
+        [JsonProperty(PropertyName = "minis")]
+        public List<Mini> Minis { get; set; } = new List<Mini>();
+        [JsonProperty(PropertyName = "favorite_minis")]
+        public List<Mini> FavoriteMinis { get; set; } = new List<Mini>();
+        [JsonProperty(PropertyName = "category")]
+        public String Category { get; set; } = "users";
 
     }
 }
