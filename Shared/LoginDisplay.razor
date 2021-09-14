@@ -4,7 +4,7 @@
 
 <AuthorizeView>
     <Authorized>
-        <text>Hello, @context.User.Identity.Name!</text>
+        <text>Hello, @context.User.FindFirst(c => c.Type == "signinname").Value!</text>
 
         <a href="MicrosoftIdentity/Account/SignOut">Log out</a>
     </Authorized>

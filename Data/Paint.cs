@@ -21,6 +21,6 @@ namespace wargamer_showcase.Data
         [JsonProperty(PropertyName = "hex_color")]
         public String HexColor { get; set; }
         [JsonProperty(PropertyName = "color_conversions")]
-        public List<String> ColorConversions { get; set; }
+        public List<ConvertedPaint> ColorConversions { get; set; }
     }
 }

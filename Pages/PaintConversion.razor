@@ -28,7 +28,7 @@
     <ul>
         @foreach (var convertedPaint in selectedPaint.ColorConversions)
         {
-            <li>@convertedPaint</li>
+            <li>@convertedPaint.ConvertedPaintName by @convertedPaint.CompanyBy</li>
         }
     </ul>
 }

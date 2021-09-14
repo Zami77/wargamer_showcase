@@ -187,3 +187,6 @@ C:\GitHub\wargamer_showcase\bin\Debug\net5.0\runtimes\win-x64\native\Microsoft.A
 D:\chunk\Documents\GitHub\wargamer_showcase\bin\Debug\net5.0\Python Scripts\ExamplePaints.json
 D:\chunk\Documents\GitHub\wargamer_showcase\obj\Debug\net5.0\RazorDeclaration\Pages\PaintConversion.razor.g.cs
 D:\chunk\Documents\GitHub\wargamer_showcase\obj\Debug\net5.0\Razor\Pages\PaintConversion.razor.g.cs
+C:\GitHub\wargamer_showcase\bin\Debug\net5.0\Python Scripts\ExamplePaints.json
+C:\GitHub\wargamer_showcase\obj\Debug\net5.0\RazorDeclaration\Pages\PaintConversion.razor.g.cs
+C:\GitHub\wargamer_showcase\obj\Debug\net5.0\Razor\Pages\PaintConversion.razor.g.cs

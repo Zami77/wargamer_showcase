@@ -9,26 +9,23 @@
 
 <AuthorizeView>
     <Authorized>
-        @foreach (var claim in context.User.Claims)
-        {
-            if (claim.Type is "emails")
+        <ul>
+            @foreach (var claim in context.User.Claims)
             {
-                curEmail = claim.Value;
-                break;
+                <li>@claim.Type | @claim.Value | @claim.Properties | @claim.ValueType</li>
             }
-        }
-        @foreach (var claim in context.User.Claims)
-        {
-            if (claim.Type is "newUser" && claim.Value is "true")
+        </ul>
+        @{ 
+            curUser = context.User.FindFirst(c => c.Type == "signinname")?.Value ?? "";
+            curEmail = context.User.FindFirst(c => c.Type == "emails")?.Value ?? "";
+            if (context.User.FindFirst(c => c.Type == "newUser")?.Value == "true")
             {
-                loginMsg =  "Thanks for joining Wargamer Showcase";
+                loginMsg = "Thanks for joining Wargamer Showcase";
                 isNewUser = true;
-                newUsername = context.User.GetDisplayName();
-                
-                break;
             }
         }
-        <text>@loginMsg, @context.User.GetDisplayName()!</text>
+
+        <text>@loginMsg, @curUser!</text>
     </Authorized>
     <NotAuthorized>
         <text>Login to inventory paint and upload Minis!</text>
@@ -37,7 +34,7 @@
 
 @code {
     bool isNewUser = false;
-    string newUsername = "";
+    string curUser = "";
     string curEmail = "";
     string loginMsg = "Welcome back to Wargamer Showcase";
 
@@ -53,10 +50,10 @@
     }
     protected override async void OnAfterRender(bool firstRender)
     {
-        if (isNewUser && newUsername.Length > 0 && curEmail.Length > 0)
+        if (isNewUser && curUser.Length > 0 && curEmail.Length > 0)
         {
             isNewUser = false;
-            await addNewUser(newUsername);
+            await addNewUser(curUser);
         }
     }
 }
