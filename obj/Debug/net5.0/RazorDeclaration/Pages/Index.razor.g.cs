@@ -119,26 +119,28 @@ using Microsoft.Extensions.Options;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 35 "C:\GitHub\wargamer_showcase\Pages\Index.razor"
+#line 28 "C:\GitHub\wargamer_showcase\Pages\Index.razor"
        
-    bool isNewUser = false;
-    string curUser = "";
-    string curEmail = "";
-    string loginMsg = "Welcome back to Wargamer Showcase";
+        bool isNewUser = false;
+        string curUser = "";
+        string loginMsg = "Welcome back to Wargamer Showcase";
 
-    private async Task addNewUser(string username)
-    {
-        var userExists = await cosmosDbService.UserExistsAsync(username);
-        if (!userExists)
+        private async Task addNewUser(string username)
         {
-            User newUser = new User(username, curEmail);
-            await cosmosDbService.AddUserAsync(newUser);
-            logger.LogInformation("Added user to cosmos");
+            var userExists = await cosmosDbService.UserExistsAsync(username);
+            if (!userExists)
+            {
+                User newUser = new User()
+                {
+                    Username = curUser
+                };
+                await cosmosDbService.AddUserAsync(newUser);
+                logger.LogInformation("Added user to cosmos");
+            }
         }
-    }
     protected override async void OnAfterRender(bool firstRender)
     {
-        if (isNewUser && curUser.Length > 0 && curEmail.Length > 0)
+        if (isNewUser && curUser.Length > 0)
         {
             isNewUser = false;
             await addNewUser(curUser);

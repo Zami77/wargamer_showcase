@@ -97,21 +97,21 @@ using wargamer_showcase.Data;
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "C:\GitHub\wargamer_showcase\Pages\PaintConversion.razor"
+#line 2 "C:\GitHub\wargamer_showcase\Pages\PaintConverter.razor"
 using Microsoft.Identity.Web;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "C:\GitHub\wargamer_showcase\Pages\PaintConversion.razor"
+#line 3 "C:\GitHub\wargamer_showcase\Pages\PaintConverter.razor"
 using Microsoft.Extensions.Options;
 
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/paintconverter")]
-    public partial class PaintConversion : Microsoft.AspNetCore.Components.ComponentBase
+    [Microsoft.AspNetCore.Components.RouteAttribute("/paintconversion")]
+    public partial class PaintConverter : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -119,11 +119,10 @@ using Microsoft.Extensions.Options;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 35 "C:\GitHub\wargamer_showcase\Pages\PaintConversion.razor"
+#line 35 "C:\GitHub\wargamer_showcase\Pages\PaintConverter.razor"
        
     List<Paint> allPaints = new();
     Paint selectedPaint = new();
-    Paint foundPaint = new();
     bool paintConverted = false;
 
     protected override async Task OnInitializedAsync()
@@ -135,22 +134,8 @@ using Microsoft.Extensions.Options;
     private void HandleValidSubmit()
     {
         selectedPaint = allPaints.Find(p => p.PaintName == selectedPaint.PaintName);
-        if (selectedPaint == null)
-        {
-            selectedPaint = new();
-            return;
-        }
-        logger.LogInformation($"Found paint conversions for {selectedPaint.PaintName}");
-        foundPaint = new();
-        foundPaint = selectedPaint;
-        selectedPaint = new();
+        logger.LogInformation($"Found paint conversions\n{selectedPaint.ColorConversions}");
         paintConverted = true;
-    }
-
-    private void ResetInput()
-    {
-        selectedPaint = new();
-        paintConverted = false;
     }
 
 #line default

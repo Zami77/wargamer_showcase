@@ -1,11 +1,11 @@
-﻿@page "/paintconversion"
+﻿@page "/paintconverter"
 @using Microsoft.Identity.Web
 @using Microsoft.Extensions.Options
 @inject IOptionsMonitor<MicrosoftIdentityOptions> microsoftIdentityOptions
 @inject ICosmosDbService cosmosDbService
 @inject ILogger<PaintConversion> logger
 
-<h2>PaintConversion</h2>
+<h2>Paint Converter</h2>
 
 <EditForm Model="@selectedPaint" OnValidSubmit="HandleValidSubmit">
     <input type="text" 
@@ -26,7 +26,7 @@
         Converted Paints
     </h3>
     <ul>
-        @foreach (var convertedPaint in selectedPaint.ColorConversions)
+        @foreach (var convertedPaint in foundPaint.ColorConversions)
         {
             <li>@convertedPaint.ConvertedPaintName by @convertedPaint.CompanyBy</li>
         }
@@ -35,6 +35,7 @@
 @code {
     List<Paint> allPaints = new();
     Paint selectedPaint = new();
+    Paint foundPaint = new();
     bool paintConverted = false;
 
     protected override async Task OnInitializedAsync()
@@ -46,7 +47,21 @@
     private void HandleValidSubmit()
     {
         selectedPaint = allPaints.Find(p => p.PaintName == selectedPaint.PaintName);
-        logger.LogInformation($"Found paint conversions\n{selectedPaint.ColorConversions}");
+        if (selectedPaint == null)
+        {
+            selectedPaint = new();
+            return;
+        }
+        logger.LogInformation($"Found paint conversions for {selectedPaint.PaintName}");
+        foundPaint = new();
+        foundPaint = selectedPaint;
+        selectedPaint = new();
         paintConverted = true;
+    }
+
+    private void ResetInput()
+    {
+        selectedPaint = new();
+        paintConverted = false;
     }
 }

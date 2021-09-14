@@ -9,15 +9,8 @@
 
 <AuthorizeView>
     <Authorized>
-        <ul>
-            @foreach (var claim in context.User.Claims)
-            {
-                <li>@claim.Type | @claim.Value | @claim.Properties | @claim.ValueType</li>
-            }
-        </ul>
         @{ 
             curUser = context.User.FindFirst(c => c.Type == "signinname")?.Value ?? "";
-            curEmail = context.User.FindFirst(c => c.Type == "emails")?.Value ?? "";
             if (context.User.FindFirst(c => c.Type == "newUser")?.Value == "true")
             {
                 loginMsg = "Thanks for joining Wargamer Showcase";
@@ -33,24 +26,26 @@
 </AuthorizeView>
 
 @code {
-    bool isNewUser = false;
-    string curUser = "";
-    string curEmail = "";
-    string loginMsg = "Welcome back to Wargamer Showcase";
+        bool isNewUser = false;
+        string curUser = "";
+        string loginMsg = "Welcome back to Wargamer Showcase";
 
-    private async Task addNewUser(string username)
-    {
-        var userExists = await cosmosDbService.UserExistsAsync(username);
-        if (!userExists)
+        private async Task addNewUser(string username)
         {
-            User newUser = new User(username, curEmail);
-            await cosmosDbService.AddUserAsync(newUser);
-            logger.LogInformation("Added user to cosmos");
+            var userExists = await cosmosDbService.UserExistsAsync(username);
+            if (!userExists)
+            {
+                User newUser = new User()
+                {
+                    Username = curUser
+                };
+                await cosmosDbService.AddUserAsync(newUser);
+                logger.LogInformation("Added user to cosmos");
+            }
         }
-    }
     protected override async void OnAfterRender(bool firstRender)
     {
-        if (isNewUser && curUser.Length > 0 && curEmail.Length > 0)
+        if (isNewUser && curUser.Length > 0)
         {
             isNewUser = false;
             await addNewUser(curUser);
