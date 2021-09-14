@@ -25,17 +25,25 @@
     <h3>
         Converted Paints
     </h3>
-    <ul>
-        @foreach (var convertedPaint in foundPaint.ColorConversions)
+    <table border="1">
+        <tr>
+            <td>Company</td>
+            <td>Paint</td>
+        </tr>
+        @foreach(var paint in convertedPaints)
         {
-            <li>@convertedPaint.ConvertedPaintName by @convertedPaint.CompanyBy</li>
+            <tr>
+                <td>@paint.Company</td>
+                <td>@paint.PaintName</td>
+            </tr>
         }
-    </ul>
+    </table>
 }
 @code {
     List<Paint> allPaints = new();
     Paint selectedPaint = new();
     Paint foundPaint = new();
+    List<Paint> convertedPaints = new();
     bool paintConverted = false;
 
     protected override async Task OnInitializedAsync()
@@ -54,7 +62,9 @@
         }
         logger.LogInformation($"Found paint conversions for {selectedPaint.PaintName}");
         foundPaint = new();
+        convertedPaints = new();
         foundPaint = selectedPaint;
+        convertedPaints = allPaints.FindAll(p => p.HexColor == foundPaint.HexColor);
         selectedPaint = new();
         paintConverted = true;
     }

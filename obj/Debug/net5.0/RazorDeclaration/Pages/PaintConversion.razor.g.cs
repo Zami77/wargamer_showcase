@@ -119,11 +119,12 @@ using Microsoft.Extensions.Options;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 35 "C:\GitHub\wargamer_showcase\Pages\PaintConversion.razor"
+#line 42 "C:\GitHub\wargamer_showcase\Pages\PaintConversion.razor"
        
     List<Paint> allPaints = new();
     Paint selectedPaint = new();
     Paint foundPaint = new();
+    List<Paint> convertedPaints = new();
     bool paintConverted = false;
 
     protected override async Task OnInitializedAsync()
@@ -142,7 +143,9 @@ using Microsoft.Extensions.Options;
         }
         logger.LogInformation($"Found paint conversions for {selectedPaint.PaintName}");
         foundPaint = new();
+        convertedPaints = new();
         foundPaint = selectedPaint;
+        convertedPaints = allPaints.FindAll(p => p.HexColor == foundPaint.HexColor);
         selectedPaint = new();
         paintConverted = true;
     }

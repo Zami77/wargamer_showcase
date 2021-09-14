@@ -20,7 +20,7 @@ namespace wargamer_showcase.Data
         public String Company { get; set; }
         [JsonProperty(PropertyName = "hex_color")]
         public String HexColor { get; set; }
-        [JsonProperty(PropertyName = "color_conversions")]
-        public List<ConvertedPaint> ColorConversions { get; set; }
+        [JsonProperty(PropertyName = "category")]
+        public String Category { get; set; } = "paints";
     }
 }
