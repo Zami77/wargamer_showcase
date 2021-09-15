@@ -3,13 +3,13 @@
         "New Citadel": "White Scar",
         "Old Citadel": "Skull White 1",
         "Vallejo Game Color": "Dead White",
-        "Vallejo Model Color": "White",
+        "Vallejo Model Color": "White Vallejo Model Color",
         "INSTAR": "Arctic White",
         "INSTAR Vintage": "",
         "Rackham": "Eternal White",
         "Reaper Master": "Pure White",
         "Privateer Press": "Morrow white",
-        "Coat D'arms": "White",
+        "Coat D'arms": "White Coat D'arms",
         "Army Painter": "Matt White",
         "Scale": "White Matt",
         "Hex Code": "FFFFFF"
@@ -611,8 +611,8 @@
         "Privateer Press": "",
         "Coat D'arms": "",
         "Army Painter": "",
-        "Scale": "Black",
-        "Hex Code": "3.84E+51"
+        "Scale": "Black Scale",
+        "Hex Code": "384E49"
     },
     {
         "New Citadel": "Loren Forest",
@@ -662,17 +662,17 @@
     {
         "New Citadel": "Nurgling Green",
         "Old Citadel": "Rotting Flesh 1",
-        "Vallejo Game Color": "Dead Flesh",
+        "Vallejo Game Color": "Dead Flesh Vallejo",
         "Vallejo Model Color": "Green sky",
         "INSTAR": "",
         "INSTAR Vintage": "",
-        "Rackham": "Dead Flesh",
+        "Rackham": "Dead Flesh Rackham",
         "Reaper Master": "Pale Olive",
         "Privateer Press": "Jack Bone",
         "Coat D'arms": "Putrid Green",
         "Army Painter": "Necrotic Flesh",
         "Scale": "",
-        "Hex Code": "849B63|"
+        "Hex Code": "849B63"
     },
     {
         "New Citadel": "Ushabti Bone",
@@ -755,7 +755,7 @@
         "Vallejo Game Color": "Filthy Brown",
         "Vallejo Model Color": "Beige Red 2",
         "INSTAR": "",
-        "INSTAR Vintage": "IV-11\nIV-12 7",
+        "INSTAR Vintage": "IV-11 IV-12 7",
         "Rackham": "Tanned Skin",
         "Reaper Master": "Tanned Leather",
         "Privateer Press": "Rucksack Tan",
@@ -912,7 +912,7 @@
         "Coat D'arms": "",
         "Army Painter": "",
         "Scale": "Arabic Shadow Matt",
-        "Hex Code": "7.05E+50"
+        "Hex Code": "705E48"
     },
     {
         "New Citadel": "Mournfang Brown",
@@ -1098,13 +1098,13 @@
         "New Citadel": "Abaddon Black",
         "Old Citadel": "Chaos Black 1",
         "Vallejo Game Color": "Chaos Black / Black",
-        "Vallejo Model Color": "Black",
+        "Vallejo Model Color": "Black Vallejo Model Color",
         "INSTAR": "Obsidian Black",
         "INSTAR Vintage": "",
         "Rackham": "Accursed Black",
         "Reaper Master": "Pure Black",
         "Privateer Press": "Thamar Black",
-        "Coat D'arms": "Black",
+        "Coat D'arms": "Black Coat D'arms",
         "Army Painter": "Matt Black",
         "Scale": "",
         "Hex Code": "0"
@@ -1399,23 +1399,23 @@
         "Old Citadel": "Asurmen Blue Wash 1",
         "Vallejo Game Color": "Blue Shade Wash",
         "Vallejo Model Color": "",
-        "INSTAR": "Blue",
-        "INSTAR Vintage": "Blue",
+        "INSTAR": "Blue INSTAR",
+        "INSTAR Vintage": "Blue INSTAR Vintage",
         "Rackham": "",
         "Reaper Master": "",
         "Privateer Press": "",
         "Coat D'arms": "",
         "Army Painter": "Blue Tone Ink",
         "Scale": "",
-        "Hex Code": "2.73E+53"
+        "Hex Code": "273E51"
     },
     {
         "New Citadel": "Carroburg Crimson",
         "Old Citadel": "Baal Red Wash 1",
         "Vallejo Game Color": "Red Shade Wash",
         "Vallejo Model Color": "",
-        "INSTAR": "Red",
-        "INSTAR Vintage": "Red",
+        "INSTAR": "Red INSTAR",
+        "INSTAR Vintage": "Red INSTAR Vintage",
         "Rackham": "",
         "Reaper Master": "",
         "Privateer Press": "",
@@ -1429,8 +1429,8 @@
         "Old Citadel": "Badab Black Wash 1",
         "Vallejo Game Color": "Black Wash",
         "Vallejo Model Color": "",
-        "INSTAR": "Black",
-        "INSTAR Vintage": "Black",
+        "INSTAR": "Black INSTAR",
+        "INSTAR Vintage": "Black INSTAR Vintage",
         "Rackham": "",
         "Reaper Master": "",
         "Privateer Press": "Armor Wash",
@@ -1603,6 +1603,21 @@
         "Army Painter": "Oozing Purple",
         "Scale": "",
         "Hex Code": "B69FCD"
+    },
+    {
+        "New Citadel": "Pink Horror",
+        "Old Citadel": "",
+        "Vallejo Game Color": "",
+        "Vallejo Model Color": "",
+        "INSTAR": "",
+        "INSTAR Vintage": "",
+        "Rackham": "",
+        "Reaper Master": "",
+        "Privateer Press": "",
+        "Coat D'arms": "",
+        "Army Painter": "",
+        "Scale": "",
+        "Hex Code": "96325C"
     },
     {
         "New Citadel": "Kreig Khaki",

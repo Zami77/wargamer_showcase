@@ -1,0 +1,124 @@
+﻿@page "/paintinventory"
+@using Microsoft.Identity.Web
+@using Microsoft.Extensions.Options
+@inject IOptionsMonitor<MicrosoftIdentityOptions> microsoftIdentityOptions
+@inject ICosmosDbService cosmosDbService
+@inject ILogger<PaintInventory> logger
+
+<h2>Paint Inventory</h2>
+<AuthorizeView>
+    <Authorized>
+        @{ 
+            curUsername = context.User.FindFirst(c => c.Type == "signinname")?.Value ?? "";
+        }
+        <EditForm Model="@selectedPaint" OnValidSubmit="HandleValidSubmit" Context="PaintInventory">
+            <input type="text"
+                   list="paint-search"
+                   placeholder="Search from @allPaints.Count() paints!"
+                   @bind-value="selectedPaint.PaintName" />
+            <datalist id="paint-search">
+                @foreach (var paint in allPaints)
+                {
+                    <option>@paint.PaintName</option>
+                }
+            </datalist>
+            <button type="submit">Add Paint</button>
+        </EditForm>
+        <h3>@curUsername's Paint Inventory</h3>
+        @if (curUser.Paints.Count > 0)
+        {
+        <table>
+            <tr>
+                <td>Paint</td>
+                <td>Qty</td>
+                <td></td>
+            </tr>
+            @foreach (var userPaint in curUser.Paints)
+            {
+
+            <tr>
+                <td>@userPaint.PaintInv.PaintName </td>
+                <td>@userPaint.Quantity </td>
+                <td>
+                    <button @onclick="() => addPaint(userPaint.PaintInv)">Add</button>
+                    <button @onclick="() => removePaint(userPaint.PaintInv)">Remove</button>
+                </td>
+            </tr>
+            }
+        </table>
+        }
+    </Authorized>
+</AuthorizeView>
+
+@code {
+    Paint selectedPaint = new();
+    List<Paint> allPaints = new();
+    string curUsername = "";
+    User curUser = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await cosmosDbService.GetAllPaintsAsync();
+        allPaints = response.ToList();
+
+        if (curUsername.Length > 0)
+        {
+            curUser = await cosmosDbService.GetUserByNameAsync(curUsername);
+        }
+    }
+
+    protected override async void OnAfterRender(bool firstRender)
+    {
+
+    }
+
+    public async void HandleValidSubmit()
+    {
+        selectedPaint = allPaints.Find(p => p.PaintName == selectedPaint.PaintName);
+        if (selectedPaint == null)
+        {
+            selectedPaint = new Paint();
+            return;
+        }
+        await addPaint(selectedPaint);
+        selectedPaint = new();
+        logger.LogInformation("Paint added to inventory");
+    }
+
+    public async Task addPaint(Paint paint)
+    {
+        var res = curUser.Paints.Find(p => p.PaintInv.PaintName == paint.PaintName);
+        if(res == null)
+        {
+            wargamer_showcase.Data.PaintInventory paintToAdd = new()
+            {
+                PaintInv = paint,
+                Quantity = 1
+            };
+            curUser.Paints.Add(paintToAdd);
+        }
+        else
+        {
+            res.Quantity++;
+        }
+        await cosmosDbService.UpdateUserAsync(curUser);
+    }
+
+    public async Task removePaint(Paint paint)
+    {
+        var res = curUser.Paints.Find(p => p.PaintInv.PaintName == paint.PaintName);
+        if (res == null)
+        {
+            return;
+        }
+        else
+        {
+            res.Quantity--;
+            if (res.Quantity == 0)
+            {
+                curUser.Paints.Remove(res);
+            }
+        }
+        await cosmosDbService.UpdateUserAsync(curUser);
+    }
+}

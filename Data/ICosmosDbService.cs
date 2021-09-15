@@ -10,8 +10,10 @@ namespace wargamer_showcase.Data
         /* Users */
         Task<IEnumerable<User>> GetUsersAsync(string query);
         Task<User> GetUserAsync(string id);
+        Task<User> GetUserByNameAsync(string username);
         Task AddUserAsync(User user);
         Task UpdateUserAsync(string id, User user);
+        Task UpdateUserAsync(User user);
         Task DeleteUserAsync(string id);
         Task<bool> UserExistsAsync(string username);
 

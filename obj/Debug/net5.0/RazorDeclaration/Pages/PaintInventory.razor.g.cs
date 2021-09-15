@@ -97,21 +97,21 @@ using wargamer_showcase.Data;
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "C:\GitHub\wargamer_showcase\Pages\PaintConversion.razor"
+#line 2 "C:\GitHub\wargamer_showcase\Pages\PaintInventory.razor"
 using Microsoft.Identity.Web;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "C:\GitHub\wargamer_showcase\Pages\PaintConversion.razor"
+#line 3 "C:\GitHub\wargamer_showcase\Pages\PaintInventory.razor"
 using Microsoft.Extensions.Options;
 
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/paintconverter")]
-    public partial class PaintConversion : Microsoft.AspNetCore.Components.ComponentBase
+    [Microsoft.AspNetCore.Components.RouteAttribute("/paintinventory")]
+    public partial class PaintInventory : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -119,41 +119,83 @@ using Microsoft.Extensions.Options;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 42 "C:\GitHub\wargamer_showcase\Pages\PaintConversion.razor"
+#line 53 "C:\GitHub\wargamer_showcase\Pages\PaintInventory.razor"
        
-    List<Paint> allPaints = new();
     Paint selectedPaint = new();
-    Paint foundPaint = new();
-    List<Paint> convertedPaints = new();
-    bool paintConverted = false;
+    List<Paint> allPaints = new();
+    string curUsername = "";
+    User curUser = new();
 
     protected override async Task OnInitializedAsync()
     {
         var response = await cosmosDbService.GetAllPaintsAsync();
         allPaints = response.ToList();
+
+        if (curUsername.Length > 0)
+        {
+            curUser = await cosmosDbService.GetUserByNameAsync(curUsername);
+        }
     }
 
-    private void HandleValidSubmit()
+    protected override async void OnAfterRender(bool firstRender)
+    {
+
+    }
+
+    public async void HandleValidSubmit()
     {
         selectedPaint = allPaints.Find(p => p.PaintName == selectedPaint.PaintName);
         if (selectedPaint == null)
         {
-            selectedPaint = new();
+            selectedPaint = new Paint();
             return;
         }
-        logger.LogInformation($"Found paint conversions for {selectedPaint.PaintName}");
-        foundPaint = new();
-        convertedPaints = new();
-        foundPaint = selectedPaint;
-        convertedPaints = allPaints.FindAll(p => p.HexColor == foundPaint.HexColor);
+        await addPaint(selectedPaint);
         selectedPaint = new();
-        paintConverted = true;
+        logger.LogInformation("Paint added to inventory");
+    }
+
+    public async Task addPaint(Paint paint)
+    {
+        var res = curUser.Paints.Find(p => p.PaintInv.PaintName == paint.PaintName);
+        if(res == null)
+        {
+            wargamer_showcase.Data.PaintInventory paintToAdd = new()
+            {
+                PaintInv = paint,
+                Quantity = 1
+            };
+            curUser.Paints.Add(paintToAdd);
+        }
+        else
+        {
+            res.Quantity++;
+        }
+        await cosmosDbService.UpdateUserAsync(curUser);
+    }
+
+    public async Task removePaint(Paint paint)
+    {
+        var res = curUser.Paints.Find(p => p.PaintInv.PaintName == paint.PaintName);
+        if (res == null)
+        {
+            return;
+        }
+        else
+        {
+            res.Quantity--;
+            if (res.Quantity == 0)
+            {
+                curUser.Paints.Remove(res);
+            }
+        }
+        await cosmosDbService.UpdateUserAsync(curUser);
     }
 
 #line default
 #line hidden
 #nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private ILogger<PaintConversion> logger { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private ILogger<PaintInventory> logger { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private ICosmosDbService cosmosDbService { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IOptionsMonitor<MicrosoftIdentityOptions> microsoftIdentityOptions { get; set; }
     }

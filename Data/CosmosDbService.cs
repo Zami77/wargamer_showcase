@@ -51,6 +51,8 @@ namespace wargamer_showcase.Data
             }
 
         }
+
+
         public async Task<Paint> GetPaintAsync(string id)
         {
             try
@@ -98,6 +100,13 @@ namespace wargamer_showcase.Data
             return await GetPaintsAsync(query);
         }
 
+        public async Task<User> GetUserByNameAsync(string username)
+        {
+            var query = $"SELECT * FROM c WHERE c.username = '{username}'";
+            var response = await GetUsersAsync(query);
+            return response.FirstOrDefault();
+        }
+
         public async Task<bool> UserExistsAsync(string username)
         {
             var query = $"SELECT * FROM c WHERE c.username ='{username}'";
@@ -108,6 +117,11 @@ namespace wargamer_showcase.Data
         public async Task UpdateUserAsync(string id, User user)
         {
             await this._container.UpsertItemAsync<User>(user, new PartitionKey(id));
+        }
+
+        public async Task UpdateUserAsync(User user)
+        {
+            await this._container.UpsertItemAsync<User>(user);
         }
     }
 }

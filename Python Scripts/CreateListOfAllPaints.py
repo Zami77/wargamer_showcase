@@ -24,6 +24,23 @@ def create_paints(paint_chunk):
             paints_added.append(newPaint)
     return paints_added
 
+def make_json_chunks(final_paints, filename):
+    count = 0
+    fileset = 1
+    chunk_size = 350
+    while count < len(final_paints):
+        innerCount = 0
+        with open(filename + str(fileset) + ".json", 'w') as f:
+            f.write('[')
+            while innerCount < chunk_size and count < len(final_paints):
+                f.write(jsonpickle.encode(final_paints[count], unpicklable=False))
+                count = count + 1
+                innerCount = innerCount + 1
+                if innerCount != chunk_size and count != len(final_paints):
+                    f.write(',')
+            f.write(']')
+        fileset = fileset + 1
+
 def main():
     filename = "PaintChart.json"
     finished_file = "ListOfAllPaints.json"
@@ -36,9 +53,10 @@ def main():
         for paint in paints_to_add:
             final_paints.append(paint)
 
-
     with open(finished_file, 'w') as f:
         f.write(jsonpickle.encode(final_paints, unpicklable=False))
+    
+    make_json_chunks(final_paints, "ListOfPaintsChunk_")
 
     print("Converted ", len(final_paints), " paint(s) to JSON!")
 

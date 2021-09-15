@@ -8,8 +8,8 @@ namespace wargamer_showcase.Data
 {
     public class PaintInventory
     {
-        [JsonProperty(PropertyName = "paint")]
-        public Paint Paint { get; set; }
+        [JsonProperty(PropertyName = "paint_inv")]
+        public Paint PaintInv { get; set; }
         [JsonProperty(PropertyName = "quantity")]
         public int Quantity { get; set; }
     }

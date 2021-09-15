@@ -104,7 +104,7 @@ using wargamer_showcase.Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 21 "C:\GitHub\wargamer_showcase\Shared\NavMenu.razor"
+#line 24 "C:\GitHub\wargamer_showcase\Shared\NavMenu.razor"
        
     private bool collapseNavMenu = true;
 

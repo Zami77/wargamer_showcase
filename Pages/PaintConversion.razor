@@ -10,7 +10,7 @@
 <EditForm Model="@selectedPaint" OnValidSubmit="HandleValidSubmit">
     <input type="text" 
            list="paint-search" 
-           placeholder="Search for a paint" 
+           placeholder="Search from @allPaints.Count() paints!" 
            @bind-value="selectedPaint.PaintName"/>
     <datalist id="paint-search">
         @foreach (var paint in allPaints)
@@ -67,11 +67,5 @@
         convertedPaints = allPaints.FindAll(p => p.HexColor == foundPaint.HexColor);
         selectedPaint = new();
         paintConverted = true;
-    }
-
-    private void ResetInput()
-    {
-        selectedPaint = new();
-        paintConverted = false;
     }
 }
