@@ -1,0 +1,1190 @@
+[
+ {
+   "Paint name": "Abaddon Black",
+   "Range": "Base",
+   "Hex colour": "#231F20",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Averland Sunset",
+   "Range": "Base",
+   "Hex colour": "#FDB825",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Balthasar Gold (Metal)",
+   "Range": "Base",
+   "Hex colour": "#A47552",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Bugmans Glow",
+   "Range": "Base",
+   "Hex colour": "#834F44",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Caledor Sky",
+   "Range": "Base",
+   "Hex colour": "#396E9E",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Caliban Green",
+   "Range": "Base",
+   "Hex colour": "#00401F",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Castellan Green",
+   "Range": "Base",
+   "Hex colour": "#314821",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Celestra Grey",
+   "Range": "Base",
+   "Hex colour": "#90A8A8",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Ceramite White",
+   "Range": "Base",
+   "Hex colour": "#FFFFFF",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Daemonette Hide",
+   "Range": "Base",
+   "Hex colour": "#696684",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Death Guard Green",
+   "Range": "Base",
+   "Hex colour": "#848A66",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Deathworld Forest",
+   "Range": "Base",
+   "Hex colour": "#5C6730",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Dryad Bark",
+   "Range": "Base",
+   "Hex colour": "#33312D",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Incubi Darkness",
+   "Range": "Base",
+   "Hex colour": "#0B474A",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Jokaero Orange",
+   "Range": "Base",
+   "Hex colour": "#EE3823",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Kantor Blue",
+   "Range": "Base",
+   "Hex colour": "#002151",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Khorne Red",
+   "Range": "Base",
+   "Hex colour": "#6A0001",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Leadbelcher (Metal)",
+   "Range": "Base",
+   "Hex colour": "#888D8F",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Macragge Blue",
+   "Range": "Base",
+   "Hex colour": "#0D407F",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Mechanicus Standard Grey",
+   "Range": "Base",
+   "Hex colour": "#3D4B4D",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Mephiston Red",
+   "Range": "Base",
+   "Hex colour": "#9A1115",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Mournfang Brown",
+   "Range": "Base",
+   "Hex colour": "#640909",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Naggaroth Night",
+   "Range": "Base",
+   "Hex colour": "#3D3354",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Rakarth Flesh",
+   "Range": "Base",
+   "Hex colour": "#A29E91",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Ratskin Flesh",
+   "Range": "Base",
+   "Hex colour": "#AD6B4C",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Retributor Armour (Metal)",
+   "Range": "Base",
+   "Hex colour": "#C39E81",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Rhinox Hide",
+   "Range": "Base",
+   "Hex colour": "#493435",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Screamer Pink",
+   "Range": "Base",
+   "Hex colour": "#7C1645",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Screaming Bell (Metal)",
+   "Range": "Base",
+   "Hex colour": "#C16F45",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Steel Legion Drab",
+   "Range": "Base",
+   "Hex colour": "#5E5134",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Stegadon Scale Green",
+   "Range": "Base",
+   "Hex colour": "#074863",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "The Fang Grey",
+   "Range": "Base",
+   "Hex colour": "#436174",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Thousand Sons Blue",
+   "Range": "Base",
+   "Hex colour": "#18ABCC",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Waaagh! Flesh",
+   "Range": "Base",
+   "Hex colour": "#1F5429",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Warplock Bronze (Metal)",
+   "Range": "Base",
+   "Hex colour": "#927D7B",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "XV-88",
+   "Range": "Base",
+   "Hex colour": "#72491E",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Zandri Dust",
+   "Range": "Base",
+   "Hex colour": "#9E915C",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Administratum Grey",
+   "Range": "Layer",
+   "Hex colour": "#949B95",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Ahriman Blue",
+   "Range": "Layer",
+   "Hex colour": "#1F8C9C",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Alaitoc Blue",
+   "Range": "Layer",
+   "Hex colour": "#295788",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Altdorf Guard Blue",
+   "Range": "Layer",
+   "Hex colour": "#1F56A7",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Auric Armour Gold (Metal)",
+   "Range": "Layer",
+   "Hex colour": "#E8BC6D",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Balor Brown",
+   "Range": "Layer",
+   "Hex colour": "#8B5910",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Baneblade Brown",
+   "Range": "Layer",
+   "Hex colour": "#937F6D",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Bestigor Flesh",
+   "Range": "Layer",
+   "Hex colour": "#D38A57",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Brass Scorpion (Metal)",
+   "Range": "Layer",
+   "Hex colour": "#B7885F",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Cadian Fleshtone",
+   "Range": "Layer",
+   "Hex colour": "#C77958",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Calgar Blue",
+   "Range": "Layer",
+   "Hex colour": "#4272B8",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Dark Reaper",
+   "Range": "Layer",
+   "Hex colour": "#3B5150",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Dawnstone",
+   "Range": "Layer",
+   "Hex colour": "#70756E",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Deathclaw Brown",
+   "Range": "Layer",
+   "Hex colour": "#B36853",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Doombull Brown",
+   "Range": "Layer",
+   "Hex colour": "#5D0009",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Elysian Green",
+   "Range": "Layer",
+   "Hex colour": "#748F39",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Emperors Children",
+   "Range": "Layer",
+   "Hex colour": "#B94278",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Eshin Grey",
+   "Range": "Layer",
+   "Hex colour": "#4A4F52",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Evil Sunz Scarlet",
+   "Range": "Layer",
+   "Hex colour": "#C2191F",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Fenrisian Grey",
+   "Range": "Layer",
+   "Hex colour": "#719BB7",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Fire Dragon Bright",
+   "Range": "Layer",
+   "Hex colour": "#F58652",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Flash Gitz Yellow",
+   "Range": "Layer",
+   "Hex colour": "#FFF200",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Flayed One Flesh",
+   "Range": "Layer",
+   "Hex colour": "#F0D9B8",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Fulgurite Copper (Metal)",
+   "Range": "Layer",
+   "Hex colour": "#FCFCDE",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Gehenna's Gold (Metal)",
+   "Range": "Layer",
+   "Hex colour": "#DBA674",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Genestealer Purple",
+   "Range": "Layer",
+   "Hex colour": "#7761AB",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Gorthor Brown",
+   "Range": "Layer",
+   "Hex colour": "#654741",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Hashut Copper (Metal)",
+   "Range": "Layer",
+   "Hex colour": "#B77647",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Hoeth Blue",
+   "Range": "Layer",
+   "Hex colour": "#4C7FB4",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Ironbreaker (Metal)",
+   "Range": "Layer",
+   "Hex colour": "#A1A6A9",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Kabalite Green",
+   "Range": "Layer",
+   "Hex colour": "#038C67",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Karak Stone",
+   "Range": "Layer",
+   "Hex colour": "#BB9662",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Kislev Flesh",
+   "Range": "Layer",
+   "Hex colour": "#D6A875",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Liberator Gold (Metal)",
+   "Range": "Layer",
+   "Hex colour": "#D3B587",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Loren Forest",
+   "Range": "Layer",
+   "Hex colour": "#50702D",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Lothern Blue",
+   "Range": "Layer",
+   "Hex colour": "#34A2CF",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Moot Green",
+   "Range": "Layer",
+   "Hex colour": "#52B244",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Nurgling Green",
+   "Range": "Layer",
+   "Hex colour": "#849C63",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Ogryn Camo",
+   "Range": "Layer",
+   "Hex colour": "#9DA94B",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Pallid Wych Flesh",
+   "Range": "Layer",
+   "Hex colour": "#CDCEBE",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Pink Horror",
+   "Range": "Layer",
+   "Hex colour": "#90305D",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Runefang Steel (Metal)",
+   "Range": "Layer",
+   "Hex colour": "#C3CACE",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Runelord Brass (Metal)",
+   "Range": "Layer",
+   "Hex colour": "#B6A89A",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Russ Grey",
+   "Range": "Layer",
+   "Hex colour": "#547588",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Screaming Skull",
+   "Range": "Layer",
+   "Hex colour": "#D2D4A2",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Skarsnik Green",
+   "Range": "Layer",
+   "Hex colour": "#5F9370",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Skavenblight Dinge",
+   "Range": "Layer",
+   "Hex colour": "#47413B",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Skrag Brown",
+   "Range": "Layer",
+   "Hex colour": "#90490F",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Skullcrusher Brass (Metal)",
+   "Range": "Layer",
+   "Hex colour": "#F1C78E",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Slaanesh Grey",
+   "Range": "Layer",
+   "Hex colour": "#8E8C97",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Sotek Green",
+   "Range": "Layer",
+   "Hex colour": "#0B6974",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Squig Orange",
+   "Range": "Layer",
+   "Hex colour": "#AA4F44",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Stormhost Silver (Metal)",
+   "Range": "Layer",
+   "Hex colour": "#BBC6C9",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Stormvermin Fur",
+   "Range": "Layer",
+   "Hex colour": "#736B65",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Straken Green",
+   "Range": "Layer",
+   "Hex colour": "#628126",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Sybarite Green",
+   "Range": "Layer",
+   "Hex colour": "#30A56C",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Sycorax Bronze (Metal)",
+   "Range": "Layer",
+   "Hex colour": "#CBB394",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Tallarn Sand",
+   "Range": "Layer",
+   "Hex colour": "#A67610",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Tau Light Ochre",
+   "Range": "Layer",
+   "Hex colour": "#BF6E1D",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Teclis Blue",
+   "Range": "Layer",
+   "Hex colour": "#317EC1",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Temple Guard Blue",
+   "Range": "Layer",
+   "Hex colour": "#339A8D",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Thunderhawk Blue",
+   "Range": "Layer",
+   "Hex colour": "#417074",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Troll Slayer Orange",
+   "Range": "Layer",
+   "Hex colour": "#F36D2D",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Tuskgor Fur",
+   "Range": "Layer",
+   "Hex colour": "#883636",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Ulthuan Grey",
+   "Range": "Layer",
+   "Hex colour": "#C7E0D9",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Ungor Flesh",
+   "Range": "Layer",
+   "Hex colour": "#D6A766",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Ushabti Bone",
+   "Range": "Layer",
+   "Hex colour": "#BBBB7F",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Warboss Green",
+   "Range": "Layer",
+   "Hex colour": "#3E805D",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Warpfiend Grey",
+   "Range": "Layer",
+   "Hex colour": "#6B6A74",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Warpstone Glow",
+   "Range": "Layer",
+   "Hex colour": "#1E7331",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Wazdakka Red",
+   "Range": "Layer",
+   "Hex colour": "#8C0A0C",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "White Scar",
+   "Range": "Layer",
+   "Hex colour": "#FFFFFF",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Wild Rider Red",
+   "Range": "Layer",
+   "Hex colour": "#EA2F28",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Xereus Purple",
+   "Range": "Layer",
+   "Hex colour": "#471F5F",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Yriel Yellow",
+   "Range": "Layer",
+   "Hex colour": "#FFDA00",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Zamesi Desert",
+   "Range": "Layer",
+   "Hex colour": "#DDA026",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Agrax Earthshade",
+   "Range": "Shade",
+   "Hex colour": "#5A573F",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Agrax Earthshade (Gloss)",
+   "Range": "Shade",
+   "Hex colour": "#5A573F",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Athonian Camoshade",
+   "Range": "Shade",
+   "Hex colour": "#6D8E44",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Biel-Tan Green",
+   "Range": "Shade",
+   "Hex colour": "#1BA169",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Carroburg Crimson",
+   "Range": "Shade",
+   "Hex colour": "#A82A70",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Casandora Yellow",
+   "Range": "Shade",
+   "Hex colour": "#FECE5A",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Coelia Greenshade",
+   "Range": "Shade",
+   "Hex colour": "#0E7F78",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Drakenhof Nightshade",
+   "Range": "Shade",
+   "Hex colour": "#125899",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Druchii Violet",
+   "Range": "Shade",
+   "Hex colour": "#7A468C",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Fuegan Orange",
+   "Range": "Shade",
+   "Hex colour": "#C77E4D",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Nuln Oil",
+   "Range": "Shade",
+   "Hex colour": "#14100E",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Nuln Oil (Gloss)",
+   "Range": "Shade",
+   "Hex colour": "#14100E",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Reikland Fleshshade",
+   "Range": "Shade",
+   "Hex colour": "#CA6C4D",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Reikland Fleshshade (Gloss)",
+   "Range": "Shade",
+   "Hex colour": "#CA6C4D",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Seraphim Sepia",
+   "Range": "Shade",
+   "Hex colour": "#D7824B",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Astorath Red",
+   "Range": "Dry",
+   "Hex colour": "#DD482B",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Changeling Pink",
+   "Range": "Dry",
+   "Hex colour": "#F4AFCD",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Chronus Blue",
+   "Range": "Dry",
+   "Hex colour": "#72A8D1",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Dawnstone",
+   "Range": "Dry",
+   "Hex colour": "#919C9F",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Eldar Flesh",
+   "Range": "Dry",
+   "Hex colour": "#ECC083",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Etherium Blue",
+   "Range": "Dry",
+   "Hex colour": "#A2BAD2",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Golden Griffon (Metal)",
+   "Range": "Dry",
+   "Hex colour": "#A99058",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Golgfag Brown",
+   "Range": "Dry",
+   "Hex colour": "#C2804F",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Hellion Green",
+   "Range": "Dry",
+   "Hex colour": "#84C3AA",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Hexos Palesun",
+   "Range": "Dry",
+   "Hex colour": "#FFF200",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Hoeth Blue",
+   "Range": "Dry",
+   "Hex colour": "#57A9D4",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Imrik Blue",
+   "Range": "Dry",
+   "Hex colour": "#67AED0",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Kindleflame",
+   "Range": "Dry",
+   "Hex colour": "#F79E86",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Longbeard Grey",
+   "Range": "Dry",
+   "Hex colour": "#CECEAF",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Lucius Lilac",
+   "Range": "Dry",
+   "Hex colour": "#B69FCC",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Necron Compound (Metal)",
+   "Range": "Dry",
+   "Hex colour": "#828B8E",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Niblet Green",
+   "Range": "Dry",
+   "Hex colour": "#7DC734",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Nurgling Green",
+   "Range": "Dry",
+   "Hex colour": "#B8CC82",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Praxeti White",
+   "Range": "Dry",
+   "Hex colour": "#FFFFFF",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Ryza Rust",
+   "Range": "Dry",
+   "Hex colour": "#EC631A",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Sigmarite",
+   "Range": "Dry",
+   "Hex colour": "#CAAD76",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Skink Blue",
+   "Range": "Dry",
+   "Hex colour": "#58C1CD",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Slaanesh Grey",
+   "Range": "Dry",
+   "Hex colour": "#DBD5E6",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Stormfang",
+   "Range": "Dry",
+   "Hex colour": "#80A7C1",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Sylvaneth Bark",
+   "Range": "Dry",
+   "Hex colour": "#AC8262",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Terminatus Stone",
+   "Range": "Dry",
+   "Hex colour": "#BDB192",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Thunderhawk Blue",
+   "Range": "Dry",
+   "Hex colour": "#509BA9",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Tyrant Skull",
+   "Range": "Dry",
+   "Hex colour": "#CDC586",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Underhive Ash",
+   "Range": "Dry",
+   "Hex colour": "#C0BD81",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Verminlord Hide",
+   "Range": "Dry",
+   "Hex colour": "#A16954",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Wrack White",
+   "Range": "Dry",
+   "Hex colour": "#FCFBFA",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Baharroth Blue",
+   "Range": "Edge",
+   "Hex colour": "#58C1CD",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Blue Horror",
+   "Range": "Edge",
+   "Hex colour": "#A2BAD2",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Dechala Lilac",
+   "Range": "Edge",
+   "Hex colour": "#B69FCC",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Dorn Yellow",
+   "Range": "Edge",
+   "Hex colour": "#FFF200",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Fulgrim Pink",
+   "Range": "Edge",
+   "Hex colour": "#F4AFCD",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Gauss Blaster Green",
+   "Range": "Edge",
+   "Hex colour": "#84C3AA",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Krieg Khaki",
+   "Range": "Edge",
+   "Hex colour": "#C0BD81",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Lugganath Orange",
+   "Range": "Edge",
+   "Hex colour": "#F79E86",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Bloodletter",
+   "Range": "Glaze",
+   "Hex colour": "#F37355",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Guilliman Blue",
+   "Range": "Glaze",
+   "Hex colour": "#2F9AD6",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Lamenters Yellow",
+   "Range": "Glaze",
+   "Hex colour": "#FFF56B",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Waywatcher Green",
+   "Range": "Glaze",
+   "Hex colour": "#6DC066",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Agrellan Badland",
+   "Range": "Texture",
+   "Hex colour": "",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Agrellan Earth",
+   "Range": "Texture",
+   "Hex colour": "",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Armageddon Dust",
+   "Range": "Texture",
+   "Hex colour": "#D3A907",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Armageddon Dunes",
+   "Range": "Texture",
+   "Hex colour": "",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Astrogranite",
+   "Range": "Texture",
+   "Hex colour": "#757679",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Astrogranite Debris",
+   "Range": "Texture",
+   "Hex colour": "",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Blackfire Earth",
+   "Range": "Texture",
+   "Hex colour": "#A75820",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Lustrian Undergrowth",
+   "Range": "Texture",
+   "Hex colour": "#415A09",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Martian Ironcrust",
+   "Range": "Texture",
+   "Hex colour": "",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Martian Ironearth",
+   "Range": "Texture",
+   "Hex colour": "",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Mourn Mountain Snow",
+   "Range": "Texture",
+   "Hex colour": "#E9EAEB",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Stirland Battlemire",
+   "Range": "Texture",
+   "Hex colour": "",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Stirland Mud",
+   "Range": "Texture",
+   "Hex colour": "#492B00",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Valhallan Blizzard",
+   "Range": "Texture",
+   "Hex colour": "",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "'Ardcoat",
+   "Range": "Technical",
+   "Hex colour": "#E2DEDF",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Agrellan Earth",
+   "Range": "Technical",
+   "Hex colour": "#9A816B",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Blood for the Blood God",
+   "Range": "Technical",
+   "Hex colour": "#67080B",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Imperial Primer",
+   "Range": "Technical",
+   "Hex colour": "#231F20",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Lahmian Medium",
+   "Range": "Technical",
+   "Hex colour": "#F5EDE2",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Liquid Green Stuff",
+   "Range": "Technical",
+   "Hex colour": "#3B7A5F",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Martian Ironearth",
+   "Range": "Technical",
+   "Hex colour": "#C15A4B",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Nihilakh Oxide",
+   "Range": "Technical",
+   "Hex colour": "#6CB79E",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Nurgle's Rot",
+   "Range": "Technical",
+   "Hex colour": "#9B8F22",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Soulstone Blue",
+   "Range": "Technical",
+   "Hex colour": "#004EFA",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Spiritstone Red",
+   "Range": "Technical",
+   "Hex colour": "#FF4B24",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Typhus Corrosion",
+   "Range": "Technical",
+   "Hex colour": "#463D2B",
+   "FIELD4": ""
+ },
+ {
+   "Paint name": "Waystone Green",
+   "Range": "Technical",
+   "Hex colour": "#00C000",
+   "FIELD4": ""
+ }
+]
