@@ -48,6 +48,9 @@
         </table>
         }
     </Authorized>
+    <NotAuthorized>
+        Please login to inventory your paints!
+    </NotAuthorized>
 </AuthorizeView>
 
 @code {
@@ -65,11 +68,6 @@
         {
             curUser = await cosmosDbService.GetUserByNameAsync(curUsername);
         }
-    }
-
-    protected override async void OnAfterRender(bool firstRender)
-    {
-
     }
 
     public async void HandleValidSubmit()

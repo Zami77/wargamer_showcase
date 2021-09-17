@@ -77,20 +77,27 @@ using Microsoft.JSInterop;
 #nullable disable
 #nullable restore
 #line 10 "C:\GitHub\wargamer_showcase\_Imports.razor"
-using wargamer_showcase;
+using BlazorInputFile;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 11 "C:\GitHub\wargamer_showcase\_Imports.razor"
-using wargamer_showcase.Shared;
+using wargamer_showcase;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 12 "C:\GitHub\wargamer_showcase\_Imports.razor"
+using wargamer_showcase.Shared;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 13 "C:\GitHub\wargamer_showcase\_Imports.razor"
 using wargamer_showcase.Data;
 
 #line default

@@ -196,3 +196,13 @@ C:\GitHub\wargamer_showcase\obj\Debug\net5.0\ref\wargamer_showcase.dll
 C:\GitHub\wargamer_showcase\obj\Debug\net5.0\wargamer_showcase.pdb
 C:\GitHub\wargamer_showcase\obj\Debug\net5.0\wargamer_showcase.genruntimeconfig.cache
 C:\GitHub\wargamer_showcase\obj\Debug\net5.0\wargamer_showcase.csprojAssemblyReference.cache
+C:\GitHub\wargamer_showcase\bin\Debug\net5.0\Python Scripts\citadel_paints.json
+C:\GitHub\wargamer_showcase\bin\Debug\net5.0\Python Scripts\ListOfAllCitadel.json
+C:\GitHub\wargamer_showcase\obj\Debug\net5.0\RazorDeclaration\Pages\DragDrop.razor.g.cs
+C:\GitHub\wargamer_showcase\obj\Debug\net5.0\RazorDeclaration\Pages\MiniUpload.razor.g.cs
+C:\GitHub\wargamer_showcase\bin\Debug\net5.0\Azure.Storage.Blobs.dll
+C:\GitHub\wargamer_showcase\bin\Debug\net5.0\Azure.Storage.Common.dll
+C:\GitHub\wargamer_showcase\bin\Debug\net5.0\BlazorInputFile.dll
+C:\GitHub\wargamer_showcase\bin\Debug\net5.0\System.Memory.Data.dll
+C:\GitHub\wargamer_showcase\obj\Debug\net5.0\Razor\Pages\DragDrop.razor.g.cs
+C:\GitHub\wargamer_showcase\obj\Debug\net5.0\Razor\Pages\MiniUpload.razor.g.cs

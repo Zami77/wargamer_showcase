@@ -1,0 +1,68 @@
+﻿@page "/miniupload"
+@using System.IO
+@using System.Text.RegularExpressions
+@using BlazorInputFile
+@using wargamer_showcase.Services
+
+@inject AzureStorageService storageService
+@inject ILogger<MiniUpload> logger
+@inject IJSRuntime iJSRuntime;
+
+
+<h3>Mini Upload</h3>
+<div class="image-upload">
+    <div class="row">
+        <BlazorInputFile.InputFile OnChange="HandleImageInputChange" />
+    </div>
+    <div class="row">
+        <img src="@dataUri">
+    </div>
+    <div class="row">
+        <button @onclick="SubmitForm">Submit</button>
+    </div>
+</div>
+
+@code {
+    private IFileListEntry selectedImage;
+    private string dataUri;
+
+    private async Task HandleImageInputChange(IFileListEntry[] files)
+    {
+        var rawFile = files.FirstOrDefault();
+        if (rawFile != null)
+        {
+            selectedImage = await rawFile.ToImageFileAsync(rawFile.Type, 1080, 1080);
+
+            var stream = new MemoryStream();
+            await selectedImage.Data.CopyToAsync(stream);
+
+            dataUri = $"data:{rawFile.Type};base64,{Convert.ToBase64String(stream.ToArray())}";
+        }
+    }
+
+    private async Task SubmitForm()
+    {
+        logger.LogInformation("SubmitForm selected");
+        if (selectedImage != null)
+        {
+            //extract just base64 string without data:image/png;base64 (for example)
+            var base64Data = Regex.Match(dataUri, @"data:image/(?<type>.+?),(?<data>.+)").Groups["data"].Value;
+            var bytes = Convert.FromBase64String(base64Data);
+
+            using (var stream = new MemoryStream(bytes))
+            {
+                var uploadedUri = await storageService.UploadFileToStorage(stream, "mini-images", selectedImage.Name);
+
+                logger.LogInformation("Image uploaded to Blob storage");
+                await iJSRuntime.InvokeVoidAsync("alert", selectedImage.Name + " was successfully uploaded!");
+
+                selectedImage = null; // Reset image
+                dataUri = "";
+            }
+        }
+        else
+        {
+            await iJSRuntime.InvokeVoidAsync("alert", "Please select an image to upload.");
+        }
+    }
+}

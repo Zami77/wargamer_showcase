@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using wargamer_showcase.Data;
+using wargamer_showcase.Services;
 
 namespace wargamer_showcase
 {
@@ -46,6 +47,9 @@ namespace wargamer_showcase
             services.AddSingleton<ICosmosDbService>(InitializeCosmosClientInstanceAsync(Configuration.GetSection("CosmosDbLaptop")).GetAwaiter().GetResult());
             services.AddServerSideBlazor()
                 .AddMicrosoftIdentityConsentHandler();
+            services.AddOptions();
+            services.Configure<AzureStorageConfig>(Configuration.GetSection("AzureStorageConfig"));
+            services.AddTransient<AzureStorageService>();
             services.AddSingleton<WeatherForecastService>();
         }
         private static async Task<CosmosDbService> InitializeCosmosClientInstanceAsync(IConfigurationSection configurationSection)

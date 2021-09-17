@@ -77,20 +77,27 @@ using Microsoft.JSInterop;
 #nullable disable
 #nullable restore
 #line 10 "C:\GitHub\wargamer_showcase\_Imports.razor"
-using wargamer_showcase;
+using BlazorInputFile;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 11 "C:\GitHub\wargamer_showcase\_Imports.razor"
-using wargamer_showcase.Shared;
+using wargamer_showcase;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 12 "C:\GitHub\wargamer_showcase\_Imports.razor"
+using wargamer_showcase.Shared;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 13 "C:\GitHub\wargamer_showcase\_Imports.razor"
 using wargamer_showcase.Data;
 
 #line default
@@ -119,7 +126,7 @@ using Microsoft.Extensions.Options;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 53 "C:\GitHub\wargamer_showcase\Pages\PaintInventory.razor"
+#line 56 "C:\GitHub\wargamer_showcase\Pages\PaintInventory.razor"
        
     Paint selectedPaint = new();
     List<Paint> allPaints = new();
@@ -135,11 +142,6 @@ using Microsoft.Extensions.Options;
         {
             curUser = await cosmosDbService.GetUserByNameAsync(curUsername);
         }
-    }
-
-    protected override async void OnAfterRender(bool firstRender)
-    {
-
     }
 
     public async void HandleValidSubmit()

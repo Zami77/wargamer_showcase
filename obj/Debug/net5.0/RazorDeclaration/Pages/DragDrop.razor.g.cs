@@ -4,7 +4,7 @@
 #pragma warning disable 0649
 #pragma warning disable 0169
 
-namespace wargamer_showcase.Shared
+namespace wargamer_showcase.Pages
 {
     #line hidden
     using System;
@@ -76,13 +76,6 @@ using Microsoft.JSInterop;
 #line hidden
 #nullable disable
 #nullable restore
-#line 10 "C:\GitHub\wargamer_showcase\_Imports.razor"
-using BlazorInputFile;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
 #line 11 "C:\GitHub\wargamer_showcase\_Imports.razor"
 using wargamer_showcase;
 
@@ -103,7 +96,14 @@ using wargamer_showcase.Data;
 #line default
 #line hidden
 #nullable disable
-    public partial class NavMenu : Microsoft.AspNetCore.Components.ComponentBase
+#nullable restore
+#line 1 "C:\GitHub\wargamer_showcase\Pages\DragDrop.razor"
+using BlazorInputFile;
+
+#line default
+#line hidden
+#nullable disable
+    public partial class DragDrop : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -111,15 +111,60 @@ using wargamer_showcase.Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 24 "C:\GitHub\wargamer_showcase\Shared\NavMenu.razor"
+#line 46 "C:\GitHub\wargamer_showcase\Pages\DragDrop.razor"
        
-    private bool collapseNavMenu = true;
+    const int MaxFileSizeMB = 8;
+    const int MaxFileSize = MaxFileSizeMB * 1024 * 1024; // 5MB
+    private string dropClass = "";
+    private bool fileSizeError = false;
+    private bool fileTypeError = false;
+    private List<IFileListEntry> selectedFiles = new List<IFileListEntry>();
 
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
+    private void HandleDragEnter()
     {
-        collapseNavMenu = !collapseNavMenu;
+        dropClass = "dropzone-drag";
+    }
+
+    private void HandleDragLeave()
+    {
+        dropClass = "";
+    }
+
+    private async Task HandleFileInputChange(IFileListEntry[] files)
+    {
+        dropClass = "";
+        fileSizeError = false;
+        fileTypeError = false;
+        List<string> acceptedFileTypes = new List<string>() { "image/png", "image/jpeg", "image/gif" };
+        if (files != null)
+        {
+            foreach (var file in files)
+            {
+                bool error = false;
+                if (file.Size > MaxFileSize)
+                {
+                    error = true;
+                    fileSizeError = true;
+                }
+
+                if (!acceptedFileTypes.Contains(file.Type))
+                {
+                    error = true;
+                    fileTypeError = true;
+                }
+
+                //keep the good files
+                if (!error)
+                {
+                    selectedFiles.Add(file);
+                }
+            }
+        }
+    }
+
+    private void RemoveFile(IFileListEntry file)
+    {
+        selectedFiles.Remove(file);
     }
 
 #line default

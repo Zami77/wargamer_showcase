@@ -76,13 +76,6 @@ using Microsoft.JSInterop;
 #line hidden
 #nullable disable
 #nullable restore
-#line 10 "C:\GitHub\wargamer_showcase\_Imports.razor"
-using BlazorInputFile;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
 #line 11 "C:\GitHub\wargamer_showcase\_Imports.razor"
 using wargamer_showcase;
 
@@ -104,21 +97,35 @@ using wargamer_showcase.Data;
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "C:\GitHub\wargamer_showcase\Pages\Index.razor"
-using Microsoft.Identity.Web;
+#line 2 "C:\GitHub\wargamer_showcase\Pages\MiniUpload.razor"
+using System.IO;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "C:\GitHub\wargamer_showcase\Pages\Index.razor"
-using Microsoft.Extensions.Options;
+#line 3 "C:\GitHub\wargamer_showcase\Pages\MiniUpload.razor"
+using System.Text.RegularExpressions;
 
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/")]
-    public partial class Index : Microsoft.AspNetCore.Components.ComponentBase
+#nullable restore
+#line 4 "C:\GitHub\wargamer_showcase\Pages\MiniUpload.razor"
+using BlazorInputFile;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 5 "C:\GitHub\wargamer_showcase\Pages\MiniUpload.razor"
+using wargamer_showcase.Services;
+
+#line default
+#line hidden
+#nullable disable
+    [Microsoft.AspNetCore.Components.RouteAttribute("/miniupload")]
+    public partial class MiniUpload : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -126,40 +133,57 @@ using Microsoft.Extensions.Options;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 28 "C:\GitHub\wargamer_showcase\Pages\Index.razor"
+#line 25 "C:\GitHub\wargamer_showcase\Pages\MiniUpload.razor"
        
-        bool isNewUser = false;
-        string curUser = "";
-        string loginMsg = "Welcome back to Wargamer Showcase";
+    private IFileListEntry selectedImage;
+    private string dataUri;
 
-        private async Task addNewUser(string username)
+    private async Task HandleImageInputChange(IFileListEntry[] files)
+    {
+        var rawFile = files.FirstOrDefault();
+        if (rawFile != null)
         {
-            var userExists = await cosmosDbService.UserExistsAsync(username);
-            if (!userExists)
+            selectedImage = await rawFile.ToImageFileAsync(rawFile.Type, 1080, 1080);
+
+            var stream = new MemoryStream();
+            await selectedImage.Data.CopyToAsync(stream);
+
+            dataUri = $"data:{rawFile.Type};base64,{Convert.ToBase64String(stream.ToArray())}";
+        }
+    }
+
+    private async Task SubmitForm()
+    {
+        logger.LogInformation("SubmitForm selected");
+        if (selectedImage != null)
+        {
+            //extract just base64 string without data:image/png;base64 (for example)
+            var base64Data = Regex.Match(dataUri, @"data:image/(?<type>.+?),(?<data>.+)").Groups["data"].Value;
+            var bytes = Convert.FromBase64String(base64Data);
+
+            using (var stream = new MemoryStream(bytes))
             {
-                User newUser = new User()
-                {
-                    Username = curUser
-                };
-                await cosmosDbService.AddUserAsync(newUser);
-                logger.LogInformation("Added user to cosmos");
+                var uploadedUri = await storageService.UploadFileToStorage(stream, "mini-images", selectedImage.Name);
+
+                logger.LogInformation("Image uploaded to Blob storage");
+                await iJSRuntime.InvokeVoidAsync("alert", selectedImage.Name + " was successfully uploaded!");
+
+                selectedImage = null; // Reset image
+                dataUri = "";
             }
         }
-    protected override async void OnAfterRender(bool firstRender)
-    {
-        if (isNewUser && curUser.Length > 0)
+        else
         {
-            isNewUser = false;
-            await addNewUser(curUser);
+            await iJSRuntime.InvokeVoidAsync("alert", "Please select an image to upload.");
         }
     }
 
 #line default
 #line hidden
 #nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private ILogger<Index> logger { get; set; }
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private ICosmosDbService cosmosDbService { get; set; }
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IOptionsMonitor<MicrosoftIdentityOptions> microsoftIdentityOptions { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IJSRuntime iJSRuntime { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private ILogger<MiniUpload> logger { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private AzureStorageService storageService { get; set; }
     }
 }
 #pragma warning restore 1591
