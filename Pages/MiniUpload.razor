@@ -18,13 +18,43 @@
         <img src="@dataUri">
     </div>
     <div class="row">
-        <button @onclick="SubmitForm">Submit</button>
+        <EditForm Model="@newMini" OnSubmit="@SubmitForm">
+            <DataAnnotationsValidator />
+            <p>
+                <InputText id="mini-name" @bind-Value="newMini.MiniName" placeholder="Mini Name"/>
+                <InputText id="mini-game" @bind-Value="newMini.Game" placeholder="Game mini is from" />
+                <InputText id="mini-faction" @bind-Value="newMini.Faction" placeholder="Mini Faction" />
+                <br />
+                @foreach (var elem in newMini.Elements)
+                {
+                    <p>
+                        elem found
+                        <InputText @bind-Value="elem.Name" placeholder="Element name" />
+                        @for (int i = 0; i < elem.PaintsUsed.Count; i++)
+                        {
+                            <p>paint found</p>
+                            <InputText @bind-Value="elem.PaintsUsed[i]" placeholder="Paints Used" />
+                        }
+                        @if (!String.IsNullOrWhiteSpace(elem.Name))
+                        {
+                            <button type="button" @onclick="() => AddPaintToElement(elem)">
+                                Add Paint To Element
+                            </button>
+                        }
+                    </p>
+                }
+                <button type="button" @onclick="AddElement">Add Element</button>
+            </p>
+        </EditForm>
     </div>
 </div>
 
 @code {
     private IFileListEntry selectedImage;
     private string dataUri;
+
+    /* Mini input fields */
+    private Mini newMini = new();
 
     private async Task HandleImageInputChange(IFileListEntry[] files)
     {
@@ -64,5 +94,25 @@
         {
             await iJSRuntime.InvokeVoidAsync("alert", "Please select an image to upload.");
         }
+    }
+
+    private void AddElement()
+    {
+        newMini.Elements.Add(new MiniElement());
+        logger.LogInformation("Added mini element");
+    }
+
+    private void AddPaintToElement(MiniElement elemToAdd)
+    {
+        foreach (var elem in newMini.Elements)
+        {
+            if (elem.Name == elemToAdd.Name)
+            {
+                elem.PaintsUsed.Add("");
+                logger.LogInformation("Paint added to mini element");
+                return;
+            }
+        }
+        logger.LogError("Element not found to add paint to!");
     }
 }

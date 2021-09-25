@@ -19,6 +19,6 @@ namespace wargamer_showcase.Data
         [JsonProperty(PropertyName = "image")]
         public String Image { get; set; }
         [JsonProperty(PropertyName = "elements")]
-        public List<MiniElement> Elements { get; set; }
+        public List<MiniElement> Elements { get; set; } = new();
     }
 }
