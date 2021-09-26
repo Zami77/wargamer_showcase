@@ -30,21 +30,21 @@
                 {
                     <div class="@elem.Name">
                         <InputText @bind-Value="elem.Name" placeholder="Element name" />
-                        @for (int i = 0; i < elem.PaintsUsed.Count; i++)
+                        @foreach (var curPaintUsed in elem.PaintsUsed)
                         {
-                        <div class="@elem.PaintsUsed[i]">
-                            index: @i of count: @elem.PaintsUsed.Count 
-                            <input type="text"
-                                   list="paint-search"
-                                   placeholder="Search from @allPaints.Count() paints!"
-                                   @bind="@elem.PaintsUsed[i]" />
-                            <datalist id="paint-search">
-                                @foreach (var paint in allPaints)
-                                {
-                                    <option>@paint.PaintName</option>
-                                }
-                            </datalist>
-                        </div>
+                            <div class="@curPaintUsed.PaintName">
+                                current paint: @curPaintUsed.PaintName 
+                                <InputText type="text"
+                                       list="paint-search"
+                                       placeholder="Search here for paints"
+                                       @bind-Value="@curPaintUsed.PaintName" />
+                                <datalist id="paint-search">
+                                    @foreach (var paint in allPaints)
+                                    {
+                                        <option>@paint.PaintName</option>
+                                    }
+                                </datalist>
+                            </div>
                         }
                         @if (!String.IsNullOrWhiteSpace(elem.Name))
                         {
@@ -126,7 +126,7 @@
         {
             if (elem.Name == elemToAdd.Name)
             {
-                elem.PaintsUsed.Add(new String(""));
+                elem.PaintsUsed.Add(new());
                 logger.LogInformation("Paint added to mini element");
                 return;
             }
