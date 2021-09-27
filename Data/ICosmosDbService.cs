@@ -25,5 +25,9 @@ namespace wargamer_showcase.Data
         Task<IEnumerable<Paint>> GetAllPaintsAsync();
 
         /* Minis */
+        Task AddMiniAsync(Mini mini);
+        Task DeleteMiniAsync(string id);
+        Task<Mini> GetMiniAsync(string id);
+        Task<IEnumerable<Mini>> GetMinisAsync(string query);
     }
 }

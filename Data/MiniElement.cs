@@ -12,7 +12,5 @@ namespace wargamer_showcase.Data
         public String Name { get; set; }
         [JsonProperty(PropertyName = "paints_used")]
         public List<MiniElementPaint> PaintsUsed { get; set; } = new();
-        [JsonProperty(PropertyName = "parent_mini")]
-        public String ParentMini { get; set; }
     }
 }

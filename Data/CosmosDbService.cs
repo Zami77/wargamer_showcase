@@ -123,5 +123,25 @@ namespace wargamer_showcase.Data
         {
             await this._container.UpsertItemAsync<User>(user);
         }
+
+        public async Task AddMiniAsync(Mini mini)
+        {
+            await this._container.CreateItemAsync<Mini>(mini);
+        }
+
+        public Task DeleteMiniAsync(string id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<Mini> GetMiniAsync(string id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<IEnumerable<Mini>> GetMinisAsync(string query)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
