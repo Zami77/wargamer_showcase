@@ -1,0 +1,57 @@
+﻿@page "/myminis"
+
+@using Microsoft.Identity.Web
+@using Microsoft.Extensions.Options
+
+@inject IOptionsMonitor<MicrosoftIdentityOptions> microsoftIdentityOptions
+@inject ICosmosDbService cosmosDbService;
+@inject ILogger<MyMinis> logger
+
+<AuthorizeView>
+    <Authorized>
+        @{
+            curUsername = context.User.FindFirst(c => c.Type == "signinname")?.Value ?? "";
+        }
+        <h3>@curUsername's Minis</h3>
+        <div class="@curUser.Username-minis">
+            <div class="row">
+                @foreach (var mini in curUser.Minis)
+                {
+
+                    <div class="@mini.MiniName">
+                        <div class="card" style="height:400px;width:400px;">
+                            <img 
+                                 class="card-img-top" 
+                                 style="max-height:200px;max-width: 200px" 
+                                 src="@mini.Image" 
+                                 alt="@mini.MiniName" />
+                            <div class="card-body">
+                                <h4 class="card-title">@mini.MiniName</h4>
+                                <a href="" class="btn btn-primary">Click for details</a>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        Log in to see your minis!
+    </NotAuthorized>
+</AuthorizeView>
+@code {
+    List<Mini> userMinis = new();
+    string curUsername = "";
+    User curUser = new();
+
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        if (curUsername.Length > 0 && String.IsNullOrWhiteSpace(curUser.Username))
+        {
+            curUser = await cosmosDbService.GetUserByNameAsync(curUsername);
+            logger.LogInformation($"Found user:{curUser.Username}");
+            this.StateHasChanged();
+        }
+    }
+}
