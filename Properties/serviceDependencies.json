@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "cosmosdb1": {
+      "type": "cosmosdb",
+      "connectionId": "cosmos-db-azure-connection-string"
+    },
+    "storage1": {
+      "type": "storage",
+      "connectionId": "blob-storage-mini-images"
+    }
+  }
+}

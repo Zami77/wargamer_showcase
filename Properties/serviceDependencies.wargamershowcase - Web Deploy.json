@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "cosmosdb1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.DocumentDB/databaseAccounts/wargamer-showcase-db",
+      "type": "cosmosdb.azure",
+      "connectionId": "cosmos-db-azure-connection-string",
+      "secretStore": "AzureAppSettings"
+    },
+    "storage1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Storage/storageAccounts/wargamerimages",
+      "type": "storage.azure",
+      "connectionId": "blob-storage-mini-images",
+      "secretStore": "AzureAppSettings"
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "dependencies": {
+    "storage1": {
+      "restored": true,
+      "restoreTime": "2021-09-29T01:41:31.6702416Z"
+    },
+    "cosmosdb1": {
+      "restored": true,
+      "restoreTime": "2021-09-29T01:40:40.3572409Z"
+    }
+  },
+  "parameters": {
+    "storage1.resourceGroupName": {
+      "Name": "storage1.resourceGroupName",
+      "Type": "resourceGroup",
+      "Value": "WargamerShowcase"
+    },
+    "cosmosdb1.resourceGroupName": {
+      "Name": "cosmosdb1.resourceGroupName",
+      "Type": "resourceGroup",
+      "Value": "WargamerShowcase"
+    },
+    "storage1.subscriptionId": {
+      "Name": "storage1.subscriptionId",
+      "Type": "subscription",
+      "Value": "9a4bdf20-3133-4fe8-95df-835e94614f42"
+    },
+    "cosmosdb1.subscriptionId": {
+      "Name": "cosmosdb1.subscriptionId",
+      "Type": "subscription",
+      "Value": "9a4bdf20-3133-4fe8-95df-835e94614f42"
+    }
+  }
+}
