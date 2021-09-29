@@ -44,7 +44,7 @@ namespace wargamer_showcase
             });
 
             services.AddRazorPages();
-            services.AddSingleton<ICosmosDbService>(InitializeCosmosClientInstanceAsync(Configuration.GetSection("CosmosDbLaptop")).GetAwaiter().GetResult());
+            services.AddSingleton<ICosmosDbService>(InitializeCosmosClientInstanceAsync(Configuration.GetSection("CosmosDbProd")).GetAwaiter().GetResult());
             services.AddServerSideBlazor()
                 .AddMicrosoftIdentityConsentHandler();
             services.AddOptions();
@@ -54,9 +54,9 @@ namespace wargamer_showcase
         }
         private static async Task<CosmosDbService> InitializeCosmosClientInstanceAsync(IConfigurationSection configurationSection)
         {
-            string databaseName = configurationSection.GetSection("DevDatabaseName").Value;
-            string containerName = configurationSection.GetSection("DevContainerName").Value;
-            string connectionString = configurationSection.GetSection("DevConnectionString").Value;
+            string databaseName = configurationSection.GetSection("DatabaseName").Value;
+            string containerName = configurationSection.GetSection("ContainerName").Value;
+            string connectionString = configurationSection.GetSection("ConnectionString").Value;
             CosmosClient client = new CosmosClient(connectionString);
             CosmosDbService cosmosDbService = new CosmosDbService(client, databaseName, containerName);
             DatabaseResponse database = await client.CreateDatabaseIfNotExistsAsync(databaseName);

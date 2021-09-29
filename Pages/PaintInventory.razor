@@ -40,8 +40,8 @@
                 <td>@userPaint.PaintInv.PaintName </td>
                 <td>@userPaint.Quantity </td>
                 <td>
-                    <button @onclick="() => addPaint(userPaint.PaintInv)">Add</button>
-                    <button @onclick="() => removePaint(userPaint.PaintInv)">Remove</button>
+                    <button class="btn btn-primary" @onclick="() => addPaint(userPaint.PaintInv)">Add</button>
+                    <button class="btn btn-danger" @onclick="() => removePaint(userPaint.PaintInv)">Remove</button>
                 </td>
             </tr>
             }
