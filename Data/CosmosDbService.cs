@@ -134,9 +134,17 @@ namespace wargamer_showcase.Data
             throw new System.NotImplementedException();
         }
 
-        public Task<Mini> GetMiniAsync(string id)
+        public async Task<Mini> GetMiniAsync(string id)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                ItemResponse<Mini> response = await this._container.ReadItemAsync<Mini>(id, new PartitionKey(id));
+                return response.Resource;
+            }
+            catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return null;
+            }
         }
 
         public Task<IEnumerable<Mini>> GetMinisAsync(string query)
