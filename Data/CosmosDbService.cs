@@ -9,7 +9,7 @@ namespace wargamer_showcase.Data
 {
     public class CosmosDbService : ICosmosDbService
     {
-        private Container _container;
+        private readonly Container _container;
 
         public CosmosDbService(
             CosmosClient dbClient,
@@ -111,7 +111,7 @@ namespace wargamer_showcase.Data
         {
             var query = $"SELECT * FROM c WHERE c.username ='{username}'";
             var response = await GetUsersAsync(query);
-            return response.Count() > 0;
+            return response.Any();
         }
 
         public async Task UpdateUserAsync(string id, User user)
@@ -134,9 +134,17 @@ namespace wargamer_showcase.Data
             throw new System.NotImplementedException();
         }
 
-        public Task<Mini> GetMiniAsync(string id)
+        public async Task<Mini> GetMiniAsync(string id)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                ItemResponse<Mini> response = await this._container.ReadItemAsync<Mini>(id, new PartitionKey(id));
+                return response.Resource;
+            }
+            catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return null;
+            }
         }
 
         public Task<IEnumerable<Mini>> GetMinisAsync(string query)
