@@ -8,9 +8,9 @@
 
 @inject IOptionsMonitor<MicrosoftIdentityOptions> microsoftIdentityOptions
 @inject AzureStorageService storageService
-@inject ICosmosDbService cosmosDbService;
+@inject ICosmosDbService cosmosDbService
 @inject ILogger<MiniUpload> logger
-@inject IJSRuntime iJSRuntime;
+@inject IJSRuntime iJSRuntime
 
 
 <h3>Mini Upload</h3>
@@ -63,6 +63,11 @@
                             </div>
                         }
                         <button class="btn btn-primary" type="button" @onclick="AddElement">Add Element</button>
+                        <br />
+                        <label>
+                            Public Viewable Mini:
+                            <InputCheckbox @bind-Value="newMini.IsPublic" />
+                        </label>
                     </p>
                     <button class="btn btn-primary" type="submit">Upload Mini</button>
                 </EditForm>
@@ -143,7 +148,7 @@
         newMini.Image = imgUri;
 
         await cosmosDbService.AddMiniAsync(newMini);
-        curUser.Minis.Add(newMini);
+        curUser.Minis.Add(newMini.Id);
         await cosmosDbService.UpdateUserAsync(curUser);
 
         await iJSRuntime.InvokeVoidAsync("alert", $"{newMini.MiniName} Mini was successfully uploaded!");

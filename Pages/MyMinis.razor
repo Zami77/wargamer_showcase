@@ -15,7 +15,7 @@
         <h3>@curUsername's Minis</h3>
         <div class="@curUser.Username-minis">
             <div class="row">
-                @foreach (var mini in curUser.Minis)
+                @foreach (var mini in userMinis)
                 {
 
                     <div class="@mini.MiniName">
@@ -51,7 +51,11 @@
         {
             curUser = await cosmosDbService.GetUserByNameAsync(curUsername);
             logger.LogInformation($"Found user:{curUser.Username}");
+            var responseMinis = await cosmosDbService.GetMinisForUser(curUser.Minis);
+            userMinis = responseMinis.ToList();
             this.StateHasChanged();
         }
     }
+
+
 }

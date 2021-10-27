@@ -29,6 +29,8 @@ namespace wargamer_showcase.Data
         public String Image { get; set; }
         [JsonProperty(PropertyName = "elements")]
         public List<MiniElement> Elements { get; set; } = new();
+        [JsonProperty(PropertyName = "is_public")]
+        public bool IsPublic { get; set; } = false;
         [JsonProperty(PropertyName = "category")]
         public String Category { get; set; } = "minis";
     }
