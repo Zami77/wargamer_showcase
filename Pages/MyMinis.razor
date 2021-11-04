@@ -20,13 +20,14 @@
 
                     <div class="@mini.MiniName">
                         <div class="card" style="height:400px;width:400px;">
-                            <img 
-                                 class="card-img-top" 
-                                 style="max-height:200px;max-width: 200px" 
-                                 src="@mini.Image" 
-                                 alt="@mini.MiniName" />
+                            <div class="card-header">
+                                @mini.MiniName
+                            </div>
                             <div class="card-body">
-                                <h4 class="card-title">@mini.MiniName</h4>
+                                <img style="max-height:200px;max-width: 200px; justify-content;"
+                                     src="@mini.Image"
+                                     alt="@mini.MiniName" />
+                                <br />
                                 <a href="/miniview/@mini.Id" class="btn btn-primary">Click for details</a>
                             </div>
                         </div>

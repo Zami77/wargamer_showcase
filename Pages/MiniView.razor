@@ -17,25 +17,29 @@
         @{
             curUsername = context.User.FindFirst(c => c.Type == "signinname")?.Value ?? "";
         }
-        <div class="mini-view">
+        <div class="@detailMini.MiniName-mini-view">
             <img src="@detailMini.Image"
                  alt="@detailMini.MiniName"
                  style="max-height:400px;max-width:400px;" />
             <p>Mini: @detailMini.MiniName</p>
             <p>Game: @detailMini.Game</p>
             <p>Faction: @detailMini.Faction</p>
-            @foreach (var elem in detailMini.Elements)
-            {
-                <div>
-                    Element: @elem.Name
-                    @foreach (var paint in elem.PaintsUsed)
-                    {
-                        <div>
-                            Paint: @paint.PaintName
+            <div class="row">
+                @foreach (var elem in detailMini.Elements)
+                {
+                    <div class="card">
+                        <div class="card-header">
+                            @elem.Name
                         </div>
-                    }
-                </div>
-            }
+                        @foreach (var paint in elem.PaintsUsed)
+                        {
+                            <div>
+                                @paint.PaintName
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
             <button class="btn btn-danger" @onclick="DeleteMini">Delete Mini</button>
         </div>
     </Authorized>
