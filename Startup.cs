@@ -48,7 +48,7 @@ namespace wargamer_showcase
             });
 
             services.AddRazorPages();
-            services.AddSingleton<ICosmosDbService>(InitializeCosmosClientInstanceAsync(Configuration.GetSection("CosmosDbProd")).GetAwaiter().GetResult());
+            services.AddSingleton<ICosmosDbService>(InitializeCosmosClientInstanceAsync(Configuration.GetSection("CosmosDbDev")).GetAwaiter().GetResult());
             services.AddServerSideBlazor()
                 .AddMicrosoftIdentityConsentHandler();
             services.AddOptions();

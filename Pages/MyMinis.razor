@@ -14,20 +14,27 @@
         }
         <h3>@curUsername's Minis</h3>
         <div class="@curUser.Username-minis">
-            <div class="row">
-                @foreach (var mini in curUser.Minis)
+            <div class="card-deck">
+                @foreach (var mini in userMinis)
                 {
 
                     <div class="@mini.MiniName">
-                        <div class="card" style="height:400px;width:400px;">
-                            <img 
-                                 class="card-img-top" 
-                                 style="max-height:200px;max-width: 200px" 
-                                 src="@mini.Image" 
-                                 alt="@mini.MiniName" />
-                            <div class="card-body">
-                                <h4 class="card-title">@mini.MiniName</h4>
-                                <a href="/miniview/@mini.Id" class="btn btn-primary">Click for details</a>
+                        <div class="card h-100" style="height:300px; width: 250px;">
+                            <div class="card-header">
+                                @mini.MiniName
+                            </div>
+                            <div class="card-body align-items-center d-flex justify-content-center">
+                                <img
+                                     style="height:200px; width:150px"
+                                     src="@mini.Image"
+                                     alt="@mini.MiniName" />
+                                <br />
+
+                            </div>
+                            <div class="card card-footer">
+                                <a href="/miniview/@mini.Id" class="btn btn-primary">
+                                    Click for details
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -51,7 +58,11 @@
         {
             curUser = await cosmosDbService.GetUserByNameAsync(curUsername);
             logger.LogInformation($"Found user:{curUser.Username}");
+            var responseMinis = await cosmosDbService.GetMinisForUser(curUser.Minis);
+            userMinis = responseMinis.ToList();
             this.StateHasChanged();
         }
     }
+
+
 }

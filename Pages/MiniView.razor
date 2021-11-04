@@ -2,40 +2,47 @@
 
 @using Microsoft.Identity.Web
 @using Microsoft.Extensions.Options
-@using Microsoft.Extensions.Primitives; 
+@using Microsoft.Extensions.Primitives;
 @using Microsoft.AspNetCore.WebUtilities;
 
 @inject IOptionsMonitor<MicrosoftIdentityOptions> microsoftIdentityOptions
 @inject Microsoft.AspNetCore.Components.NavigationManager navManager
-@inject ICosmosDbService cosmosDbService;
+@inject ICosmosDbService cosmosDbService
+@inject IJSRuntime iJSRuntime
 @inject ILogger<MiniView> logger
-<h3>Mini View</h3>
 
 <AuthorizeView>
     <Authorized>
         @{
             curUsername = context.User.FindFirst(c => c.Type == "signinname")?.Value ?? "";
         }
-        <div class="mini-view">
-            <img 
-                 src="@detailMini.Image" 
+        <div class="@detailMini.MiniName-mini-view">
+            <h3> @detailMini.MiniName</h3>
+            <img src="@detailMini.Image"
                  alt="@detailMini.MiniName"
                  style="max-height:400px;max-width:400px;" />
-            <p>Mini: @detailMini.MiniName</p>
             <p>Game: @detailMini.Game</p>
             <p>Faction: @detailMini.Faction</p>
-            @foreach (var elem in detailMini.Elements)
-                {
-                    <div>
-                        Element: @elem.Name
-                        @foreach (var paint in elem.PaintsUsed)
+            <div class="row">
+                <div class="card-deck">
+                    @foreach (var elem in detailMini.Elements)
                     {
-                        <div>
-                            Paint: @paint.PaintName
+                        <div class="card">
+                            <div class="card-header">
+                                @elem.Name
+                            </div>
+                            <div class="card-body align-items-center d-flex justify-content-center">
+                                @foreach (var paint in elem.PaintsUsed)
+                                {
+                                    @paint.PaintName
+                                    <br />
+                                }
+                            </div>
                         </div>
                     }
-                    </div>
-                }
+                </div>
+            </div>
+            <button class="btn btn-danger" @onclick="DeleteMini">Delete Mini</button>
         </div>
     </Authorized>
     <NotAuthorized>
@@ -63,6 +70,22 @@
             curUser = await cosmosDbService.GetUserByNameAsync(curUsername);
             logger.LogInformation($"Found user:{curUser.Username}");
             this.StateHasChanged();
+        }
+    }
+
+    public async void DeleteMini()
+    {
+        var response = await iJSRuntime.InvokeAsync<bool>("confirm", $"Are you sure you want to delete {detailMini.MiniName}?");
+
+        if (response)
+        {
+            if (curUser.Minis.Remove(detailMini.Id))
+            {
+                logger.LogInformation($"Successfully removed {detailMini.MiniName}");
+            }
+            await cosmosDbService.UpdateUserAsync(curUser.Id, curUser);
+            await cosmosDbService.DeleteMiniAsync(detailMini.Id);
+            navManager.NavigateTo("/myminis");
         }
     }
 }

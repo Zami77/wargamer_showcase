@@ -29,9 +29,9 @@ namespace wargamer_showcase.Data
         [JsonProperty(PropertyName = "paints")]
         public List<PaintInventory> Paints { get; set; } = new List<PaintInventory>();
         [JsonProperty(PropertyName = "minis")]
-        public List<Mini> Minis { get; set; } = new List<Mini>();
+        public List<String> Minis { get; set; } = new List<String>();
         [JsonProperty(PropertyName = "favorite_minis")]
-        public List<Mini> FavoriteMinis { get; set; } = new List<Mini>();
+        public List<String> FavoriteMinis { get; set; } = new List<String>();
         [JsonProperty(PropertyName = "category")]
         public String Category { get; set; } = "users";
 

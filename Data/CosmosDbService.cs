@@ -129,9 +129,9 @@ namespace wargamer_showcase.Data
             await this._container.CreateItemAsync<Mini>(mini);
         }
 
-        public Task DeleteMiniAsync(string id)
+        public async Task DeleteMiniAsync(string id)
         {
-            throw new System.NotImplementedException();
+            await this._container.DeleteItemAsync<Mini>(id, new PartitionKey(id));
         }
 
         public async Task<Mini> GetMiniAsync(string id)
@@ -147,9 +147,24 @@ namespace wargamer_showcase.Data
             }
         }
 
-        public Task<IEnumerable<Mini>> GetMinisAsync(string query)
+        public async Task<IEnumerable<Mini>> GetMinisAsync(string queryString)
         {
-            throw new System.NotImplementedException();
+            var query = this._container.GetItemQueryIterator<Mini>(new QueryDefinition(queryString));
+            List<Mini> results = new();
+            while (query.HasMoreResults)
+            {
+                var response = await query.ReadNextAsync();
+
+                results.AddRange(response.ToList());
+            }
+
+            return results;
+        }
+
+        public async Task<IEnumerable<Mini>> GetMinisForUser(List<string> miniIds)
+        {
+            var query = "SELECT * FROM c where c.id IN " + "('" + string.Join("','", miniIds) + "')";
+            return await GetMinisAsync(query);
         }
     }
 }
