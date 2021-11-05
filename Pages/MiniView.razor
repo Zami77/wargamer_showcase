@@ -24,23 +24,24 @@
             <p>Game: @detailMini.Game</p>
             <p>Faction: @detailMini.Faction</p>
             <div class="row">
-                <div class="card-deck">
-                    @foreach (var elem in detailMini.Elements)
+
+                @foreach (var elem in detailMini.Elements)
                     {
-                        <div class="card">
-                            <div class="card-header">
-                                @elem.Name
-                            </div>
-                            <div class="card-body align-items-center d-flex justify-content-center">
-                                @foreach (var paint in elem.PaintsUsed)
-                                {
-                                    @paint.PaintName
-                                    <br />
-                                }
-                            </div>
+                <div class="col-md-2" style="padding: 10px">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            @elem.Name
                         </div>
-                    }
+                        <div class="card-body align-items-center d-flex justify-content-center">
+                            @foreach (var paint in elem.PaintsUsed)
+                                {
+                            @paint.PaintName
+                            <br />
+                                }
+                        </div>
+                    </div>
                 </div>
+                    }
             </div>
             <button class="btn btn-danger" @onclick="DeleteMini">Delete Mini</button>
         </div>

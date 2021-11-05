@@ -34,34 +34,41 @@
                         <InputText id="mini-game" @bind-Value="newMini.Game" placeholder="Game mini is from" />
                         <InputText id="mini-faction" @bind-Value="newMini.Faction" placeholder="Mini Faction" />
                         <br />
-                        @foreach (var elem in newMini.Elements)
+                        <div class="row">
+                            @foreach (var elem in newMini.Elements)
                         {
-                            <div class="@elem.Name">
-                                <InputText @bind-Value="elem.Name" placeholder="Element name" />
-                                @foreach (var curPaintUsed in elem.PaintsUsed)
+
+                            <div class="col-lg-4" style="padding: 10px">
+                                <div class="card">
+                                    <div class="@elem.Name">
+                                        <InputText @bind-Value="elem.Name" placeholder="Element name" />
+                                        @foreach (var curPaintUsed in elem.PaintsUsed)
                                 {
-                                    <div class="@curPaintUsed.PaintName">
-                                        current paint: @curPaintUsed.PaintName
-                                        <InputText type="text"
-                                                   list="paint-search"
-                                                   placeholder="Search here for paints"
-                                                   @bind-Value="@curPaintUsed.PaintName" />
-                                        <datalist id="paint-search">
-                                            @foreach (var paint in allPaints)
+                                        <div class="@curPaintUsed.PaintName">
+                                            current paint: @curPaintUsed.PaintName
+                                            <InputText type="text"
+                                                       list="paint-search"
+                                                       placeholder="Search here for paints"
+                                                       @bind-Value="@curPaintUsed.PaintName" />
+                                            <datalist id="paint-search">
+                                                @foreach (var paint in allPaints)
                                             {
                                                 <option>@paint.PaintName</option>
                                             }
-                                        </datalist>
-                                    </div>
+                                            </datalist>
+                                        </div>
                                 }
-                                @if (!String.IsNullOrWhiteSpace(elem.Name))
+                                        @if (!String.IsNullOrWhiteSpace(elem.Name))
                                 {
-                                    <button type="button" @onclick="() => AddPaintToElement(elem)">
-                                        Add Paint To Element
-                                    </button>
+                                        <button type="button" @onclick="() => AddPaintToElement(elem)">
+                                            Add Paint To Element
+                                        </button>
                                 }
+                                    </div>
+                                </div>
                             </div>
                         }
+                        </div>
                         <button class="btn btn-primary" type="button" @onclick="AddElement">Add Element</button>
                         <br />
                         <label>
