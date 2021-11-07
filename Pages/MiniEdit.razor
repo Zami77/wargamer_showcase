@@ -1,0 +1,249 @@
+﻿@page "/miniedit/{mini_id}"
+
+@using System.IO
+@using System.Text.RegularExpressions
+@using BlazorInputFile
+@using wargamer_showcase.Services
+@using Microsoft.Identity.Web
+@using Microsoft.Extensions.Options
+
+@inject IOptionsMonitor<MicrosoftIdentityOptions> microsoftIdentityOptions
+@inject Microsoft.AspNetCore.Components.NavigationManager navManager
+@inject ICosmosDbService cosmosDbService
+@inject IJSRuntime iJSRuntime
+@inject IOptionsMonitor<MicrosoftIdentityOptions> microsoftIdentityOptions
+@inject AzureStorageService storageService
+@inject ICosmosDbService cosmosDbService
+@inject ILogger<MiniEdit> logger
+
+<h3>Mini Edit</h3>
+<AuthorizeView>
+    <Authorized>
+        @{
+            curUsername = context.User.FindFirst(c => c.Type == "signinname")?.Value ?? "";
+        }
+        <div class="mini-upload">
+            <div class="row">
+                <BlazorInputFile.InputFile OnChange="HandleImageInputChange" />
+            </div>
+            <div class="row">
+                <img src="@dataUri">
+            </div>
+            <div class="row">
+                <EditForm Model="@editMini" OnValidSubmit="@SubmitForm" Context="MiniUpload">
+                    <DataAnnotationsValidator />
+                    <p>
+                        <InputText id="mini-name" @bind-Value="editMini.MiniName" placeholder="Mini Name" />
+                        <InputText id="mini-game" @bind-Value="editMini.Game" placeholder="Game mini is from" />
+                        <InputText id="mini-faction" @bind-Value="editMini.Faction" placeholder="Mini Faction" />
+                        <br />
+                        <div class="row">
+                            @foreach (var elem in editMini.Elements)
+                            {
+                                <div class="col-lg-4" style="padding: 10px">
+                                    <div class="card">
+                                        <div class="@elem.Name">
+                                            <InputText @bind-Value="elem.Name" placeholder="Element name" />
+                                            @foreach (var curPaintUsed in elem.PaintsUsed)
+                                            {
+                                                <div class="@curPaintUsed.PaintName">
+                                                    current paint: @curPaintUsed.PaintName
+                                                    <InputText type="text"
+                                                               list="paint-search"
+                                                               placeholder="Search here for paints"
+                                                               @bind-Value="@curPaintUsed.PaintName" />
+                                                    <datalist id="paint-search">
+                                                        @foreach (var paint in allPaints)
+                                                        {
+                                                            <option>@paint.PaintName</option>
+                                                        }
+                                                    </datalist>
+                                                </div>
+                                            }
+                                            @if (!String.IsNullOrWhiteSpace(elem.Name))
+                                            {
+                                                <button class="btn-secondary" type="button" @onclick="() => AddPaintToElement(elem)">
+                                                    Add Paint To Element
+                                                </button>
+                                            }
+                                        </div>
+                                        <button class="btn-danger" type="button" @onclick="() => RemoveElement(elem)">
+                                            Remove Element
+                                        </button>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <button class="btn btn-primary" type="button" @onclick="AddElement">Add Element</button>
+                        <br />
+                        <label>
+                            Public Viewable Mini:
+                            <InputCheckbox @bind-Value="editMini.IsPublic" />
+                        </label>
+                    </p>
+                    <button class="btn btn-primary" type="submit">Update Mini</button>
+                    <button class="btn btn-warning" type="button" @onclick="GoToMyMinis">Cancel Edit</button>
+                </EditForm>
+            </div>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <div class="not-logged-in">
+            Please log in to upload Minis!
+        </div>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    [Parameter]
+    public string mini_id { get; set; }
+    Mini editMini = new();
+    User curUser = new();
+    string curUsername = "";
+    private IFileListEntry selectedImage;
+    private string dataUri;
+    List<Paint> allPaints = new();
+
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+
+            editMini = await cosmosDbService.GetMiniAsync(this.mini_id);
+        }
+
+        if (curUsername.Length > 0 && String.IsNullOrWhiteSpace(curUser.Username))
+        {
+            curUser = await cosmosDbService.GetUserByNameAsync(curUsername);
+            logger.LogInformation($"Found user:{curUser.Username}");
+            this.StateHasChanged();
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await cosmosDbService.GetAllPaintsAsync();
+        allPaints = response.ToList();
+
+    }
+
+    private async Task HandleImageInputChange(IFileListEntry[] files)
+    {
+        var rawFile = files.FirstOrDefault();
+        if (rawFile != null)
+        {
+            selectedImage = await rawFile.ToImageFileAsync(rawFile.Type, 1080, 1080);
+
+            var stream = new MemoryStream();
+            await selectedImage.Data.CopyToAsync(stream);
+
+            dataUri = $"data:{rawFile.Type};base64,{Convert.ToBase64String(stream.ToArray())}";
+        }
+    }
+
+    private async Task SubmitForm()
+    {
+        logger.LogInformation("SubmitForm selected");
+
+        if (HasErrorsNewMini())
+        {
+            await iJSRuntime.InvokeVoidAsync("alert", "Unable to update Mini! Make sure to name all elements!");
+            return;
+        }
+        var imgUri = "";
+        if (selectedImage != null)
+        {
+            //extract just base64 string without data:image/png;base64 (for example)
+            var base64Data = Regex.Match(dataUri, @"data:image/(?<type>.+?),(?<data>.+)").Groups["data"].Value;
+            var bytes = Convert.FromBase64String(base64Data);
+
+            using (var stream = new MemoryStream(bytes))
+            {
+                var imgName = $"{editMini.MiniName}-{editMini.Id}-{selectedImage.Name}";
+                var uploadedUri = await storageService.UploadFileToStorage(stream, "mini-images", imgName);
+                imgUri = $"https://wargamerimages.blob.core.windows.net/mini-images/{imgName}";
+
+                logger.LogInformation("Image uploaded to Blob storage");
+
+                selectedImage = null; // Reset image
+                dataUri = "";
+            }
+            editMini.Image = imgUri;
+        }
+        else
+        {
+            // await iJSRuntime.InvokeVoidAsync("alert", "Please select an image to upload.");
+            // return;
+        }
+
+
+
+        await cosmosDbService.UpdateMiniAsync(editMini);
+
+        await iJSRuntime.InvokeVoidAsync("alert", $"{editMini.MiniName} Mini was successfully updated!");
+        navManager.NavigateTo("/myminis");
+    }
+
+    private bool HasErrorsNewMini()
+    {
+        foreach (var elem in editMini.Elements)
+        {
+            if (String.IsNullOrWhiteSpace(elem.Name))
+            {
+                return true;
+            }
+            Predicate<MiniElementPaint> nullPaint =
+                delegate (MiniElementPaint pnt) { return String.IsNullOrWhiteSpace(pnt.PaintName); };
+            elem.PaintsUsed.RemoveAll(nullPaint);
+        }
+
+        return false;
+    }
+
+    private void AddElement()
+    {
+        editMini.Elements.Add(new MiniElement());
+        logger.LogInformation("Added mini element");
+    }
+
+    private void RemoveElement(MiniElement elemToRemove)
+    {
+        editMini.Elements.Remove(elemToRemove);
+        logger.LogInformation("Removed mini element");
+    }
+
+    private void AddPaintToElement(MiniElement elemToAdd)
+    {
+        foreach (var elem in editMini.Elements)
+        {
+            if (elem.Name == elemToAdd.Name)
+            {
+                elem.PaintsUsed.Add(new());
+                logger.LogInformation("Paint added to mini element");
+                return;
+            }
+        }
+        logger.LogError("Element not found to add paint to!");
+    }
+
+    public async void DeleteMini()
+    {
+        var response = await iJSRuntime.InvokeAsync<bool>("confirm", $"Are you sure you want to delete {editMini.MiniName}?");
+
+        if (response)
+        {
+            if (curUser.Minis.Remove(editMini.Id))
+            {
+                logger.LogInformation($"Successfully removed {editMini.MiniName}");
+            }
+            await cosmosDbService.UpdateUserAsync(curUser.Id, curUser);
+            await cosmosDbService.DeleteMiniAsync(editMini.Id);
+            navManager.NavigateTo("/myminis");
+        }
+    }
+
+    private void GoToMyMinis()
+    {
+        navManager.NavigateTo("/myminis");
+    }
+}

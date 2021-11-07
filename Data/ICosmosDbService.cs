@@ -28,6 +28,7 @@ namespace wargamer_showcase.Data
         Task AddMiniAsync(Mini mini);
         Task DeleteMiniAsync(string id);
         Task<Mini> GetMiniAsync(string id);
+        Task UpdateMiniAsync(Mini mini);
         Task<IEnumerable<Mini>> GetMinisAsync(string query);
         Task<IEnumerable<Mini>> GetMinisForUser(List<string> miniIds);
     }
