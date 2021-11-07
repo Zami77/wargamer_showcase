@@ -36,14 +36,13 @@
                         <br />
                         <div class="row">
                             @foreach (var elem in newMini.Elements)
-                        {
-
+                            {
                             <div class="col-lg-4" style="padding: 10px">
                                 <div class="card">
                                     <div class="@elem.Name">
                                         <InputText @bind-Value="elem.Name" placeholder="Element name" />
                                         @foreach (var curPaintUsed in elem.PaintsUsed)
-                                {
+                                        {
                                         <div class="@curPaintUsed.PaintName">
                                             current paint: @curPaintUsed.PaintName
                                             <InputText type="text"
@@ -57,17 +56,20 @@
                                             }
                                             </datalist>
                                         </div>
-                                }
+                                        }
                                         @if (!String.IsNullOrWhiteSpace(elem.Name))
-                                {
-                                        <button type="button" @onclick="() => AddPaintToElement(elem)">
-                                            Add Paint To Element
-                                        </button>
-                                }
+                                        {
+                                            <button class="btn-secondary" type="button" @onclick="() => AddPaintToElement(elem)">
+                                                Add Paint To Element
+                                            </button>
+                                        }
                                     </div>
+                                    <button class="btn-danger" type="button" @onclick="() => RemoveElement(elem)">
+                                        Remove Element
+                                    </button>
                                 </div>
                             </div>
-                        }
+                            }
                         </div>
                         <button class="btn btn-primary" type="button" @onclick="AddElement">Add Element</button>
                         <br />
@@ -127,6 +129,12 @@
     private async Task SubmitForm()
     {
         logger.LogInformation("SubmitForm selected");
+
+        if (HasErrorsNewMini())
+        {
+            await iJSRuntime.InvokeVoidAsync("alert", "Unable to upload Mini! Make sure to name all elements!");
+            return;
+        }
         var imgUri = "";
         if (selectedImage != null)
         {
@@ -162,10 +170,32 @@
         newMini = new();
     }
 
+    private bool HasErrorsNewMini()
+    {
+        foreach (var elem in newMini.Elements)
+        {
+            if (String.IsNullOrWhiteSpace(elem.Name))
+            {
+                return true;
+            }
+            Predicate<MiniElementPaint> nullPaint = 
+                delegate (MiniElementPaint pnt) { return String.IsNullOrWhiteSpace(pnt.PaintName); };
+            elem.PaintsUsed.RemoveAll(nullPaint);
+        }
+
+        return false;
+    }
+
     private void AddElement()
     {
         newMini.Elements.Add(new MiniElement());
         logger.LogInformation("Added mini element");
+    }
+
+    private void RemoveElement(MiniElement elemToRemove)
+    {
+        newMini.Elements.Remove(elemToRemove);
+        logger.LogInformation("Removed mini element");
     }
 
     private void AddPaintToElement(MiniElement elemToAdd)
