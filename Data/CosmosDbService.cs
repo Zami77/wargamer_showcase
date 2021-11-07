@@ -147,6 +147,11 @@ namespace wargamer_showcase.Data
             }
         }
 
+        public async Task UpdateMiniAsync(Mini mini)
+        {
+            await this._container.UpsertItemAsync<Mini>(mini);
+        }
+
         public async Task<IEnumerable<Mini>> GetMinisAsync(string queryString)
         {
             var query = this._container.GetItemQueryIterator<Mini>(new QueryDefinition(queryString));
