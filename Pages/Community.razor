@@ -1,0 +1,25 @@
+﻿@page "/community"
+
+@inject ICosmosDbService cosmosDbService
+@inject IJSRuntime iJSRuntime
+@inject ILogger<MiniView> logger
+
+<h3>Community Page</h3>
+<div class="community-page">
+    <div class="card-deck">
+        @foreach (var mini in PublicMinis)
+        {
+            <MiniCard mini="@mini" isUser="false" />
+        }
+    </div>
+</div>
+
+@code {
+    List<Mini> PublicMinis = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var responseMinis = await cosmosDbService.GetPublicMinis();
+        PublicMinis = responseMinis.ToList();
+    }
+}
