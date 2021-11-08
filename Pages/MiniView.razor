@@ -61,14 +61,13 @@
     string curUsername = "";
     bool userCreatedMini = false;
 
+    protected override async Task OnInitializedAsync()
+    {
+        detailMini = await cosmosDbService.GetMiniAsync(this.mini_id);
+    }
+
     protected override async void OnAfterRender(bool firstRender)
     {
-        if (firstRender)
-        {
-
-            detailMini = await cosmosDbService.GetMiniAsync(this.mini_id);
-        }
-
         if (curUsername.Length > 0 && String.IsNullOrWhiteSpace(curUser.Username))
         {
             curUser = await cosmosDbService.GetUserByNameAsync(curUsername);
