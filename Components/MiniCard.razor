@@ -1,0 +1,31 @@
+﻿<div class="@mini.MiniName">
+    <div class="card h-100" style="height:250px; width: 250px;">
+        <div class="card-header">
+            @mini.MiniName
+        </div>
+        <div class="card-body align-items-center d-flex justify-content-center">
+            <img style="height:200px; width:200px"
+                 src="@mini.Image"
+                 alt="@mini.MiniName" />
+            <br />
+
+        </div>
+        <div class="card card-footer">
+            <a href="/miniview/@mini.Id" class="btn btn-primary">
+                Detail view
+            </a>
+            @if (isUser)
+            {
+                <a href="/miniedit/@mini.Id" class="btn btn-warning">
+                    Edit
+                </a>
+            }
+        </div>
+    </div>
+</div>
+@code {
+    [Parameter]
+    public Mini mini { get; set; }
+    [Parameter]
+    public bool isUser { get; set; } = false;
+}
