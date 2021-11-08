@@ -171,5 +171,11 @@ namespace wargamer_showcase.Data
             var query = "SELECT * FROM c where c.id IN " + "('" + string.Join("','", miniIds) + "')";
             return await GetMinisAsync(query);
         }
+
+        public async Task<IEnumerable<Mini>> GetPublicMinis()
+        {
+            var query = "SELECT * FROM c WHERE c.is_public = true";
+            return await GetMinisAsync(query);
+        }
     }
 }

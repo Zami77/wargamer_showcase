@@ -2,8 +2,6 @@
 
 @using Microsoft.Identity.Web
 @using Microsoft.Extensions.Options
-@using Microsoft.Extensions.Primitives;
-@using Microsoft.AspNetCore.WebUtilities;
 
 @inject IOptionsMonitor<MicrosoftIdentityOptions> microsoftIdentityOptions
 @inject Microsoft.AspNetCore.Components.NavigationManager navManager
@@ -11,40 +9,44 @@
 @inject IJSRuntime iJSRuntime
 @inject ILogger<MiniView> logger
 
+<div class="@detailMini.MiniName-mini-view">
+    <h3> @detailMini.MiniName</h3>
+    <img src="@detailMini.Image"
+         alt="@detailMini.MiniName"
+         style="max-height:400px;max-width:400px;" />
+    <p>Game: @detailMini.Game</p>
+    <p>Faction: @detailMini.Faction</p>
+    <div class="row">
+
+        @foreach (var elem in detailMini.Elements)
+        {
+            <div class="col-md-2" style="padding: 10px">
+                <div class="card h-100">
+                    <div class="card-header">
+                        @elem.Name
+                    </div>
+                    <div class="card-body align-items-center d-flex justify-content-center">
+                        @foreach (var paint in elem.PaintsUsed)
+                        {
+                            @paint.PaintName
+                            <br />
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
 <AuthorizeView>
     <Authorized>
         @{
             curUsername = context.User.FindFirst(c => c.Type == "signinname")?.Value ?? "";
         }
-        <div class="@detailMini.MiniName-mini-view">
-            <h3> @detailMini.MiniName</h3>
-            <img src="@detailMini.Image"
-                 alt="@detailMini.MiniName"
-                 style="max-height:400px;max-width:400px;" />
-            <p>Game: @detailMini.Game</p>
-            <p>Faction: @detailMini.Faction</p>
-            <div class="row">
-
-                @foreach (var elem in detailMini.Elements)
-                    {
-                <div class="col-md-2" style="padding: 10px">
-                    <div class="card h-100">
-                        <div class="card-header">
-                            @elem.Name
-                        </div>
-                        <div class="card-body align-items-center d-flex justify-content-center">
-                            @foreach (var paint in elem.PaintsUsed)
-                                {
-                            @paint.PaintName
-                            <br />
-                                }
-                        </div>
-                    </div>
-                </div>
-                    }
-            </div>
+        @if (userCreatedMini)
+        {
             <button class="btn btn-danger" @onclick="DeleteMini">Delete Mini</button>
-        </div>
+        }
     </Authorized>
     <NotAuthorized>
 
@@ -57,6 +59,7 @@
     Mini detailMini = new();
     User curUser = new();
     string curUsername = "";
+    bool userCreatedMini = false;
 
     protected override async void OnAfterRender(bool firstRender)
     {
@@ -70,6 +73,7 @@
         {
             curUser = await cosmosDbService.GetUserByNameAsync(curUsername);
             logger.LogInformation($"Found user:{curUser.Username}");
+            userCreatedMini = curUser.Minis.Contains(mini_id);
             this.StateHasChanged();
         }
     }
