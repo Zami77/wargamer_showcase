@@ -2,7 +2,7 @@
     <div class="card-deck">
         @foreach (var mini in GetCurrentPage())
         {
-            <MiniCard mini="@mini" isUser=true />
+            <MiniCard mini="@mini" isUser="@canEdit" />
         }
     </div>
     <MudPagination Color="Color.Primary"
@@ -14,6 +14,8 @@
     public List<Mini> minis { get; set; }
     [Parameter]
     public int minisPerPage { get; set; } = 3;
+    [Parameter]
+    public bool canEdit { get; set; } = false;
 
     int _selected = 1;
 
