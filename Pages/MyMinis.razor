@@ -14,12 +14,7 @@
         }
         <h3>@curUsername's Minis</h3>
         <div class="@curUser.Username-minis">
-            <div class="card-deck">
-                @foreach (var mini in userMinis)
-                {
-                    <MiniCard mini="@mini" isUser=true/>
-                }
-            </div>
+            <MiniPagination minis="@userMinis" />
         </div>
     </Authorized>
     <NotAuthorized>

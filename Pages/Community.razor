@@ -6,16 +6,12 @@
 
 <h3>Community Page</h3>
 <div class="community-page">
-    <div class="card-deck">
-        @foreach (var mini in PublicMinis)
-        {
-            <MiniCard mini="@mini" isUser=true />
-        }
-    </div>
+    <MiniPagination minis="@PublicMinis" />
 </div>
 
 @code {
     List<Mini> PublicMinis = new();
+
 
     protected override async Task OnInitializedAsync()
     {
