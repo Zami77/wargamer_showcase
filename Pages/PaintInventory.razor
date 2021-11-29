@@ -22,12 +22,12 @@
                     <option>@paint.PaintName</option>
                 }
             </datalist>
-            <button type="submit">Add Paint</button>
+            <button class="btn btn-primary" type="submit">Add Paint</button>
         </EditForm>
         <h3>@curUsername's Paint Inventory</h3>
         @if (curUser.Paints.Count > 0)
         {
-        <table>
+        <MudSimpleTable Hover="true" Bordered="true">
             <tr>
                 <td>Paint</td>
                 <td>Qty</td>
@@ -45,7 +45,7 @@
                 </td>
             </tr>
             }
-        </table>
+        </MudSimpleTable>
         }
     </Authorized>
     <NotAuthorized>

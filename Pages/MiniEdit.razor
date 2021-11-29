@@ -22,6 +22,8 @@
         @{
             curUsername = context.User.FindFirst(c => c.Type == "signinname")?.Value ?? "";
         }
+        @if (canEditMini)
+        {
         <div class="mini-upload">
             <div class="row">
                 <BlazorInputFile.InputFile OnChange="HandleImageInputChange" />
@@ -86,10 +88,17 @@
                 </EditForm>
             </div>
         </div>
+        }
+        else
+        {
+            <div>
+                <p>You don't have permission to edit this mini.</p>
+            </div>
+        }
     </Authorized>
     <NotAuthorized>
         <div class="not-logged-in">
-            Please log in to upload Minis!
+            Please log in to edit Minis!
         </div>
     </NotAuthorized>
 </AuthorizeView>
@@ -103,6 +112,7 @@
     private IFileListEntry selectedImage;
     private string dataUri;
     List<Paint> allPaints = new();
+    bool canEditMini = false;
 
     protected override async void OnAfterRender(bool firstRender)
     {
@@ -116,6 +126,7 @@
         {
             curUser = await cosmosDbService.GetUserByNameAsync(curUsername);
             logger.LogInformation($"Found user:{curUser.Username}");
+            canEditMini = curUser.Minis.Contains(this.mini_id);
             this.StateHasChanged();
         }
     }

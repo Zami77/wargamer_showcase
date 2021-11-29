@@ -1,0 +1,38 @@
+﻿<div class="mini-pagination">
+    <div class="card-deck">
+        @foreach (var mini in GetCurrentPage())
+        {
+            <MiniCard mini="@mini" isUser=true />
+        }
+    </div>
+    <MudPagination Color="Color.Primary"
+                   Count="(minis.Count/minisPerPage + (minis.Count % minisPerPage > 0 ? 1 : 0))"
+                   @bind-Selected="@_selected" />
+</div>
+@code {
+    [Parameter]
+    public List<Mini> minis { get; set; }
+    [Parameter]
+    public int minisPerPage { get; set; } = 3;
+
+    int _selected = 1;
+
+    private List<Mini> GetCurrentPage()
+    {
+        if (minis.Count <= minisPerPage)
+        {
+            return minis;
+        }
+
+        int curIndex = (_selected - 1) * minisPerPage;
+
+        if (curIndex + minisPerPage >= minis.Count)
+        {
+            var tailEndMinis = minis.GetRange(curIndex, minis.Count - curIndex);
+            return tailEndMinis;
+        }
+
+        return minis.GetRange(curIndex, minisPerPage);
+
+    }
+}

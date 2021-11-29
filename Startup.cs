@@ -20,6 +20,7 @@ using Microsoft.Extensions.Azure;
 using Azure.Storage.Queues;
 using Azure.Storage.Blobs;
 using Azure.Core.Extensions;
+using MudBlazor.Services;
 
 namespace wargamer_showcase
 {
@@ -48,6 +49,7 @@ namespace wargamer_showcase
             });
 
             services.AddRazorPages();
+            services.AddMudServices();
             services.AddSingleton<ICosmosDbService>(InitializeCosmosClientInstanceAsync(Configuration.GetSection("CosmosDbDev")).GetAwaiter().GetResult());
             services.AddServerSideBlazor()
                 .AddMicrosoftIdentityConsentHandler();
