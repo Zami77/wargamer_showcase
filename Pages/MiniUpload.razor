@@ -30,55 +30,83 @@
                 <EditForm Model="@newMini" OnValidSubmit="@SubmitForm" Context="MiniUpload">
                     <DataAnnotationsValidator />
                     <p>
-                        <InputText id="mini-name" @bind-Value="newMini.MiniName" placeholder="Mini Name" />
-                        <InputText id="mini-game" @bind-Value="newMini.Game" placeholder="Game mini is from" />
-                        <InputText id="mini-faction" @bind-Value="newMini.Faction" placeholder="Mini Faction" />
+                        <MudGrid>
+                            <MudItem lg="4">
+                                <MudTextField Label="Name of Mini" @bind-Value="newMini.MiniName" For="() => newMini.MiniName" />
+                            </MudItem>
+                            <MudItem lg="4">
+                                <MudTextField Label="Game of Mini" @bind-Value="newMini.Game" For="() => newMini.Game" />
+                            </MudItem>
+                            <MudItem lg="4">
+                                <MudTextField Label="Mini-Faction" @bind-Value="newMini.Faction" For="() => newMini.Faction" />
+                            </MudItem>
+                        </MudGrid>
+
                         <br />
                         <div class="row">
                             @foreach (var elem in newMini.Elements)
                             {
-                            <div class="col-lg-4" style="padding: 10px">
-                                <div class="card">
+                            <div class="col-lg-6" style="padding: 10px;">
+                                <div class="card" style="width: 100%;">
                                     <div class="@elem.Name">
-                                        <InputText @bind-Value="elem.Name" placeholder="Element name" />
+                                        <MudTextField @bind-Value="elem.Name" placeholder="Element name" />
                                         @foreach (var curPaintUsed in elem.PaintsUsed)
                                         {
                                         <div class="@curPaintUsed.PaintName">
-                                            current paint: @curPaintUsed.PaintName
-                                            <InputText type="text"
-                                                       list="paint-search"
-                                                       placeholder="Search here for paints"
-                                                       @bind-Value="@curPaintUsed.PaintName" />
-                                            <datalist id="paint-search">
-                                                @foreach (var paint in allPaints)
-                                            {
-                                                <option>@paint.PaintName</option>
-                                            }
-                                            </datalist>
+                                            <MudGrid>
+                                                <MudItem lg="8">
+                                                    <MudTextField type="text"
+                                                                  list="paint-search"
+                                                                  placeholder="Search here for paints"
+                                                                  @bind-Value="@curPaintUsed.PaintName" />
+                                                </MudItem>
+                                                <MudItem lg="4">
+                                                    <MudSelect T="string"
+                                                               Label="Paint Detail"
+                                                               Strict="true">
+                                                        <MudSelectItem Value="@("Base")" />
+                                                        <MudSelectItem Value="@("Layer")" />
+                                                        <MudSelectItem Value="@("Edge")" />
+                                                    </MudSelect>
+                                                    <datalist id="paint-search">
+                                                        @foreach (var paint in allPaints)
+                                                        {
+                                                            <option>@paint.PaintName</option>
+                                                        }
+                                                    </datalist>
+                                                </MudItem>
+                                            </MudGrid>
                                         </div>
                                         }
-                                        @if (!String.IsNullOrWhiteSpace(elem.Name))
-                                        {
-                                            <button class="btn-secondary" type="button" @onclick="() => AddPaintToElement(elem)">
-                                                Add Paint To Element
-                                            </button>
-                                        }
+                                        <MudButton Variant="Variant.Filled" Color="Color.Primary" type="button" OnClick="() => AddPaintToElement(elem)">
+                                            Add Paint
+                                        </MudButton>
                                     </div>
-                                    <button class="btn-danger" type="button" @onclick="() => RemoveElement(elem)">
+                                    <MudButton Variant="Variant.Filled" Color="Color.Error" type="button" OnClick="() => RemoveElement(elem)">
                                         Remove Element
-                                    </button>
+                                    </MudButton>
                                 </div>
                             </div>
                             }
                         </div>
-                        <button class="btn btn-primary" type="button" @onclick="AddElement">Add Element</button>
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" type="button" OnClick="AddElement">Add Element</MudButton>
                         <br />
-                        <label>
+                        <MudInputLabel>
                             Public Viewable Mini:
-                            <InputCheckbox @bind-Value="newMini.IsPublic" />
-                        </label>
+                            <MudCheckBox Color="Color.Primary" @bind-Checked="newMini.IsPublic" />
+                        </MudInputLabel>
                     </p>
-                    <button class="btn btn-primary" type="submit">Upload Mini</button>
+                    <MudButton Variant="Variant.Filled" Color="Color.Success" ButtonType="ButtonType.Submit">
+                        @if (_processing)
+                        {
+                            <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                            <MudText Class="ms-2">Uploading</MudText>
+                        }
+                        else
+                        {
+                            <MudText>Upload Mini</MudText>
+                        }
+                    </MudButton>
                 </EditForm>
             </div>
         </div>
@@ -97,6 +125,8 @@
     private string dataUri;
     List<Paint> allPaints = new();
     User curUser = new();
+    int newElemNum = 1;
+    bool _processing = false;
 
     /* Mini input fields */
     private Mini newMini = new();
@@ -130,9 +160,12 @@
     {
         logger.LogInformation("SubmitForm selected");
 
+        _processing = true;
+
         if (HasErrorsNewMini())
         {
             await iJSRuntime.InvokeVoidAsync("alert", "Unable to upload Mini! Make sure to name all elements!");
+            _processing = false;
             return;
         }
         var imgUri = "";
@@ -157,6 +190,7 @@
         else
         {
             await iJSRuntime.InvokeVoidAsync("alert", "Please select an image to upload.");
+            _processing = false;
             return;
         }
 
@@ -167,6 +201,7 @@
         await cosmosDbService.UpdateUserAsync(curUser);
 
         await iJSRuntime.InvokeVoidAsync("alert", $"{newMini.MiniName} Mini was successfully uploaded!");
+        _processing = false;
         newMini = new();
     }
 
@@ -178,7 +213,7 @@
             {
                 return true;
             }
-            Predicate<MiniElementPaint> nullPaint = 
+            Predicate<MiniElementPaint> nullPaint =
                 delegate (MiniElementPaint pnt) { return String.IsNullOrWhiteSpace(pnt.PaintName); };
             elem.PaintsUsed.RemoveAll(nullPaint);
         }
@@ -188,7 +223,10 @@
 
     private void AddElement()
     {
-        newMini.Elements.Add(new MiniElement());
+        newMini.Elements.Add(new MiniElement()
+        {
+            Name = $"New Element {newElemNum++}"
+        });
         logger.LogInformation("Added mini element");
     }
 
