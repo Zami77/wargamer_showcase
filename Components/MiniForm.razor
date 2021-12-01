@@ -10,13 +10,22 @@
 @inject ICosmosDbService cosmosDbService
 @inject ILogger<MiniForm> logger
 @inject IJSRuntime iJSRuntime
+@inject NavigationManager navManager
 
 <div class="mini-upload">
     <div class="row">
         <BlazorInputFile.InputFile OnChange="HandleImageInputChange" />
     </div>
     <div class="row">
-        <img src="@dataUri">
+        @if (mini.Image != null && mini.Image.Any())
+        {
+            <img src="@mini.Image" />
+        }
+        else
+        {
+            <img src="@dataUri">
+
+        }
     </div>
     <div class="row">
         <EditForm Model="@mini" OnValidSubmit="@SubmitForm" Context="MiniUpload">
@@ -96,13 +105,19 @@
                 @if (_processing)
                 {
                     <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
-                    <MudText Class="ms-2">Uploading</MudText>
+                    string miniAction = isEdit ? "Updating" : "Uploading";
+                    <MudText Class="ms-2">@miniAction</MudText>
                 }
                 else
                 {
-                    <MudText>Upload Mini</MudText>
+                    string miniAction = isEdit ? "Update" : "Upload";
+                    <MudText>@miniAction Mini</MudText>
                 }
             </MudButton>
+            @if (isEdit)
+            {
+                <MudButton Variant="Variant.Filled" Color="Color.Warning" @onclick="GoToMyMinis">Cancel Edit</MudButton>
+            }
         </EditForm>
     </div>
 </div>
@@ -116,6 +131,8 @@
     public User curUser { get; set; } = new();
     int newElemNum = 1;
     bool _processing = false;
+    [Parameter]
+    public bool isEdit { get; set; } = false;
 
     /* Mini input fields */
     [Parameter]
@@ -165,15 +182,24 @@
                 selectedImage = null; // Reset image
                 dataUri = "";
             }
+
+            mini.Image = imgUri;
         }
-        else
+        else if (!isEdit)
         {
             await iJSRuntime.InvokeVoidAsync("alert", "Please select an image to upload.");
             _processing = false;
             return;
         }
 
-        mini.Image = imgUri;
+        @if (isEdit)
+        {
+            await cosmosDbService.UpdateMiniAsync(mini);
+            await iJSRuntime.InvokeVoidAsync("alert", $"{mini.MiniName} Mini was successfully updated!");
+            _processing = false;
+            navManager.NavigateTo("/myminis");
+            return;
+        }
 
         await cosmosDbService.AddMiniAsync(mini);
         curUser.Minis.Add(mini.Id);
@@ -227,5 +253,15 @@
             }
         }
         logger.LogError("Element not found to add paint to!");
+    }
+
+    private async void GoToMyMinis()
+    {
+        var response = await iJSRuntime.InvokeAsync<bool>("confirm", $"Are you sure you want to cancel edit for {mini.MiniName}?");
+
+        if (response)
+        {
+            navManager.NavigateTo("/myminis");
+        }
     }
 }

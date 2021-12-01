@@ -26,12 +26,14 @@
                         @elem.Name
                     </div>
                     <div class="card-body align-items-center d-flex justify-content-center">
-                        @foreach (var paint in elem.PaintsUsed)
-                        {
-                            @paint.PaintDetail @:
-                            @paint.PaintName
-                            <br />
-                        }
+                        <MudTable Items="elem.PaintsUsed">
+
+                            <RowTemplate>
+                                <MudTd >@context.PaintDetail</MudTd>
+                                <MudTd >@context.PaintName</MudTd>
+                            </RowTemplate>
+
+                        </MudTable>
                     </div>
                 </div>
             </div>
