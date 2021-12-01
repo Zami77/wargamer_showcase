@@ -1,7 +1,5 @@
 ﻿@page "/miniupload"
-@using System.IO
-@using System.Text.RegularExpressions
-@using BlazorInputFile
+
 @using wargamer_showcase.Services
 @using Microsoft.Identity.Web
 @using Microsoft.Extensions.Options
@@ -19,69 +17,7 @@
         @{
             curUsername = context.User.FindFirst(c => c.Type == "signinname")?.Value ?? "";
         }
-        <div class="mini-upload">
-            <div class="row">
-                <BlazorInputFile.InputFile OnChange="HandleImageInputChange" />
-            </div>
-            <div class="row">
-                <img src="@dataUri">
-            </div>
-            <div class="row">
-                <EditForm Model="@newMini" OnValidSubmit="@SubmitForm" Context="MiniUpload">
-                    <DataAnnotationsValidator />
-                    <p>
-                        <InputText id="mini-name" @bind-Value="newMini.MiniName" placeholder="Mini Name" />
-                        <InputText id="mini-game" @bind-Value="newMini.Game" placeholder="Game mini is from" />
-                        <InputText id="mini-faction" @bind-Value="newMini.Faction" placeholder="Mini Faction" />
-                        <br />
-                        <div class="row">
-                            @foreach (var elem in newMini.Elements)
-                            {
-                            <div class="col-lg-4" style="padding: 10px">
-                                <div class="card">
-                                    <div class="@elem.Name">
-                                        <InputText @bind-Value="elem.Name" placeholder="Element name" />
-                                        @foreach (var curPaintUsed in elem.PaintsUsed)
-                                        {
-                                        <div class="@curPaintUsed.PaintName">
-                                            current paint: @curPaintUsed.PaintName
-                                            <InputText type="text"
-                                                       list="paint-search"
-                                                       placeholder="Search here for paints"
-                                                       @bind-Value="@curPaintUsed.PaintName" />
-                                            <datalist id="paint-search">
-                                                @foreach (var paint in allPaints)
-                                            {
-                                                <option>@paint.PaintName</option>
-                                            }
-                                            </datalist>
-                                        </div>
-                                        }
-                                        @if (!String.IsNullOrWhiteSpace(elem.Name))
-                                        {
-                                            <button class="btn-secondary" type="button" @onclick="() => AddPaintToElement(elem)">
-                                                Add Paint To Element
-                                            </button>
-                                        }
-                                    </div>
-                                    <button class="btn-danger" type="button" @onclick="() => RemoveElement(elem)">
-                                        Remove Element
-                                    </button>
-                                </div>
-                            </div>
-                            }
-                        </div>
-                        <button class="btn btn-primary" type="button" @onclick="AddElement">Add Element</button>
-                        <br />
-                        <label>
-                            Public Viewable Mini:
-                            <InputCheckbox @bind-Value="newMini.IsPublic" />
-                        </label>
-                    </p>
-                    <button class="btn btn-primary" type="submit">Upload Mini</button>
-                </EditForm>
-            </div>
-        </div>
+        <MiniForm curUser="curUser" mini="newMini" allPaints="allPaints" />
     </Authorized>
     <NotAuthorized>
         <div class="not-logged-in">
@@ -93,10 +29,8 @@
 
 @code {
     private string curUsername = "";
-    private IFileListEntry selectedImage;
-    private string dataUri;
-    List<Paint> allPaints = new();
     User curUser = new();
+    List<Paint> allPaints = new();
 
     /* Mini input fields */
     private Mini newMini = new();
@@ -112,103 +46,4 @@
         }
     }
 
-    private async Task HandleImageInputChange(IFileListEntry[] files)
-    {
-        var rawFile = files.FirstOrDefault();
-        if (rawFile != null)
-        {
-            selectedImage = await rawFile.ToImageFileAsync(rawFile.Type, 1080, 1080);
-
-            var stream = new MemoryStream();
-            await selectedImage.Data.CopyToAsync(stream);
-
-            dataUri = $"data:{rawFile.Type};base64,{Convert.ToBase64String(stream.ToArray())}";
-        }
-    }
-
-    private async Task SubmitForm()
-    {
-        logger.LogInformation("SubmitForm selected");
-
-        if (HasErrorsNewMini())
-        {
-            await iJSRuntime.InvokeVoidAsync("alert", "Unable to upload Mini! Make sure to name all elements!");
-            return;
-        }
-        var imgUri = "";
-        if (selectedImage != null)
-        {
-            //extract just base64 string without data:image/png;base64 (for example)
-            var base64Data = Regex.Match(dataUri, @"data:image/(?<type>.+?),(?<data>.+)").Groups["data"].Value;
-            var bytes = Convert.FromBase64String(base64Data);
-
-            using (var stream = new MemoryStream(bytes))
-            {
-                var imgName = $"{newMini.MiniName}-{newMini.Id}-{selectedImage.Name}";
-                var uploadedUri = await storageService.UploadFileToStorage(stream, "mini-images", imgName);
-                imgUri = $"https://wargamerimages.blob.core.windows.net/mini-images/{imgName}";
-
-                logger.LogInformation("Image uploaded to Blob storage");
-
-                selectedImage = null; // Reset image
-                dataUri = "";
-            }
-        }
-        else
-        {
-            await iJSRuntime.InvokeVoidAsync("alert", "Please select an image to upload.");
-            return;
-        }
-
-        newMini.Image = imgUri;
-
-        await cosmosDbService.AddMiniAsync(newMini);
-        curUser.Minis.Add(newMini.Id);
-        await cosmosDbService.UpdateUserAsync(curUser);
-
-        await iJSRuntime.InvokeVoidAsync("alert", $"{newMini.MiniName} Mini was successfully uploaded!");
-        newMini = new();
-    }
-
-    private bool HasErrorsNewMini()
-    {
-        foreach (var elem in newMini.Elements)
-        {
-            if (String.IsNullOrWhiteSpace(elem.Name))
-            {
-                return true;
-            }
-            Predicate<MiniElementPaint> nullPaint = 
-                delegate (MiniElementPaint pnt) { return String.IsNullOrWhiteSpace(pnt.PaintName); };
-            elem.PaintsUsed.RemoveAll(nullPaint);
-        }
-
-        return false;
-    }
-
-    private void AddElement()
-    {
-        newMini.Elements.Add(new MiniElement());
-        logger.LogInformation("Added mini element");
-    }
-
-    private void RemoveElement(MiniElement elemToRemove)
-    {
-        newMini.Elements.Remove(elemToRemove);
-        logger.LogInformation("Removed mini element");
-    }
-
-    private void AddPaintToElement(MiniElement elemToAdd)
-    {
-        foreach (var elem in newMini.Elements)
-        {
-            if (elem.Name == elemToAdd.Name)
-            {
-                elem.PaintsUsed.Add(new());
-                logger.LogInformation("Paint added to mini element");
-                return;
-            }
-        }
-        logger.LogError("Element not found to add paint to!");
-    }
 }

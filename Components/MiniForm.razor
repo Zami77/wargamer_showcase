@@ -1,0 +1,267 @@
+﻿@using System.IO
+@using System.Text.RegularExpressions
+@using BlazorInputFile
+@using wargamer_showcase.Services
+@using Microsoft.Identity.Web
+@using Microsoft.Extensions.Options
+
+@inject IOptionsMonitor<MicrosoftIdentityOptions> microsoftIdentityOptions
+@inject AzureStorageService storageService
+@inject ICosmosDbService cosmosDbService
+@inject ILogger<MiniForm> logger
+@inject IJSRuntime iJSRuntime
+@inject NavigationManager navManager
+
+<div class="mini-upload">
+    <div class="row">
+        <BlazorInputFile.InputFile OnChange="HandleImageInputChange" />
+    </div>
+    <div class="row">
+        @if (mini.Image != null && mini.Image.Any())
+        {
+            <img src="@mini.Image" />
+        }
+        else
+        {
+            <img src="@dataUri">
+
+        }
+    </div>
+    <div class="row">
+        <EditForm Model="@mini" OnValidSubmit="@SubmitForm" Context="MiniUpload">
+            <DataAnnotationsValidator />
+            <p>
+                <MudGrid>
+                    <MudItem lg="4">
+                        <MudTextField Label="Name of Mini" @bind-Value="mini.MiniName" For="() => mini.MiniName" />
+                    </MudItem>
+                    <MudItem lg="4">
+                        <MudTextField Label="Game of Mini" @bind-Value="mini.Game" For="() => mini.Game" />
+                    </MudItem>
+                    <MudItem lg="4">
+                        <MudTextField Label="Mini-Faction" @bind-Value="mini.Faction" For="() => mini.Faction" />
+                    </MudItem>
+                </MudGrid>
+
+                <br />
+                <div class="row">
+                    @foreach (var elem in mini.Elements)
+                    {
+                        <div class="col-lg-6" style="padding: 10px;">
+                            <div class="card" style="width: 100%;">
+                                <div class="@elem.Name">
+                                    <MudTextField @bind-Value="elem.Name" placeholder="Element name" />
+                                    @foreach (var curPaintUsed in elem.PaintsUsed)
+                                    {
+                                        <div class="@curPaintUsed.PaintName">
+                                            <MudGrid>
+                                                <MudItem lg="8">
+                                                    <MudTextField type="text"
+                                                                  list="paint-search"
+                                                                  placeholder="Search here for paints"
+                                                                  @bind-Value="@curPaintUsed.PaintName" />
+                                                </MudItem>
+                                                <MudItem lg="4">
+                                                    <MudSelect T="string"
+                                                               Label="Paint Detail"
+                                                               Strict="true">
+                                                        <MudSelectItem Value="@("Base")" />
+                                                        <MudSelectItem Value="@("Layer")" />
+                                                        <MudSelectItem Value="@("Highlight")" />
+                                                        <MudSelectItem Value="@("Shade")" />
+                                                    </MudSelect>
+                                                    <datalist id="paint-search">
+                                                        @foreach (var paint in allPaints)
+                                                        {
+                                                            <option>@paint.PaintName</option>
+                                                        }
+                                                    </datalist>
+                                                </MudItem>
+                                            </MudGrid>
+                                        </div>
+                                    }
+                                    <MudButton Variant="Variant.Filled"
+                                               Color="Color.Primary"
+                                               type="button"
+                                               OnClick="() => AddPaintToElement(elem)">
+                                        Add Paint
+                                    </MudButton>
+                                </div>
+                                <MudButton Variant="Variant.Filled" Color="Color.Error" type="button" OnClick="() => RemoveElement(elem)">
+                                    Remove Element
+                                </MudButton>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" type="button" OnClick="AddElement">Add Element</MudButton>
+                <br />
+                <MudInputLabel>
+                    Public Viewable Mini:
+                    <MudCheckBox Color="Color.Primary" @bind-Checked="mini.IsPublic" />
+                </MudInputLabel>
+            </p>
+            <MudButton Variant="Variant.Filled" Color="Color.Success" ButtonType="ButtonType.Submit">
+                @if (_processing)
+                {
+                    <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                    string miniAction = isEdit ? "Updating" : "Uploading";
+                    <MudText Class="ms-2">@miniAction</MudText>
+                }
+                else
+                {
+                    string miniAction = isEdit ? "Update" : "Upload";
+                    <MudText>@miniAction Mini</MudText>
+                }
+            </MudButton>
+            @if (isEdit)
+            {
+                <MudButton Variant="Variant.Filled" Color="Color.Warning" @onclick="GoToMyMinis">Cancel Edit</MudButton>
+            }
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    private IFileListEntry selectedImage;
+    private string dataUri;
+    [Parameter]
+    public List<Paint> allPaints { get; set; } = new();
+    [Parameter]
+    public User curUser { get; set; } = new();
+    int newElemNum = 1;
+    bool _processing = false;
+    [Parameter]
+    public bool isEdit { get; set; } = false;
+
+    /* Mini input fields */
+    [Parameter]
+    public Mini mini { get; set; } = new();
+
+    private async Task HandleImageInputChange(IFileListEntry[] files)
+    {
+        var rawFile = files.FirstOrDefault();
+        if (rawFile != null)
+        {
+            selectedImage = await rawFile.ToImageFileAsync(rawFile.Type, 1080, 1080);
+
+            var stream = new MemoryStream();
+            await selectedImage.Data.CopyToAsync(stream);
+
+            dataUri = $"data:{rawFile.Type};base64,{Convert.ToBase64String(stream.ToArray())}";
+        }
+    }
+
+    private async Task SubmitForm()
+    {
+        logger.LogInformation("SubmitForm selected");
+
+        _processing = true;
+
+        if (HasErrorsMini())
+        {
+            await iJSRuntime.InvokeVoidAsync("alert", "Unable to upload Mini! Make sure to name all elements!");
+            _processing = false;
+            return;
+        }
+        var imgUri = "";
+        if (selectedImage != null)
+        {
+            //extract just base64 string without data:image/png;base64 (for example)
+            var base64Data = Regex.Match(dataUri, @"data:image/(?<type>.+?),(?<data>.+)").Groups["data"].Value;
+            var bytes = Convert.FromBase64String(base64Data);
+
+            using (var stream = new MemoryStream(bytes))
+            {
+                var imgName = $"{mini.MiniName}-{mini.Id}-{selectedImage.Name}";
+                var uploadedUri = await storageService.UploadFileToStorage(stream, "mini-images", imgName);
+                imgUri = $"https://wargamerimages.blob.core.windows.net/mini-images/{imgName}";
+
+                logger.LogInformation("Image uploaded to Blob storage");
+
+                selectedImage = null; // Reset image
+                dataUri = "";
+            }
+
+            mini.Image = imgUri;
+        }
+        else if (!isEdit)
+        {
+            await iJSRuntime.InvokeVoidAsync("alert", "Please select an image to upload.");
+            _processing = false;
+            return;
+        }
+
+        @if (isEdit)
+        {
+            await cosmosDbService.UpdateMiniAsync(mini);
+            await iJSRuntime.InvokeVoidAsync("alert", $"{mini.MiniName} Mini was successfully updated!");
+            _processing = false;
+            navManager.NavigateTo("/myminis");
+            return;
+        }
+
+        await cosmosDbService.AddMiniAsync(mini);
+        curUser.Minis.Add(mini.Id);
+        await cosmosDbService.UpdateUserAsync(curUser);
+
+        await iJSRuntime.InvokeVoidAsync("alert", $"{mini.MiniName} Mini was successfully uploaded!");
+        _processing = false;
+        mini = new();
+    }
+
+    private bool HasErrorsMini()
+    {
+        foreach (var elem in mini.Elements)
+        {
+            if (String.IsNullOrWhiteSpace(elem.Name))
+            {
+                return true;
+            }
+            Predicate<MiniElementPaint> nullPaint =
+                delegate (MiniElementPaint pnt) { return String.IsNullOrWhiteSpace(pnt.PaintName); };
+            elem.PaintsUsed.RemoveAll(nullPaint);
+        }
+
+        return false;
+    }
+
+    private void AddElement()
+    {
+        mini.Elements.Add(new MiniElement()
+        {
+            Name = $"New Element {newElemNum++}"
+        });
+        logger.LogInformation("Added mini element");
+    }
+
+    private void RemoveElement(MiniElement elemToRemove)
+    {
+        mini.Elements.Remove(elemToRemove);
+        logger.LogInformation("Removed mini element");
+    }
+
+    private void AddPaintToElement(MiniElement elemToAdd)
+    {
+        foreach (var elem in mini.Elements)
+        {
+            if (elem.Name == elemToAdd.Name)
+            {
+                elem.PaintsUsed.Add(new());
+                logger.LogInformation("Paint added to mini element");
+                return;
+            }
+        }
+        logger.LogError("Element not found to add paint to!");
+    }
+
+    private async void GoToMyMinis()
+    {
+        var response = await iJSRuntime.InvokeAsync<bool>("confirm", $"Are you sure you want to cancel edit for {mini.MiniName}?");
+
+        if (response)
+        {
+            navManager.NavigateTo("/myminis");
+        }
+    }
+}
