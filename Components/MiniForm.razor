@@ -64,7 +64,8 @@
                                                 <MudItem lg="4">
                                                     <MudSelect T="string"
                                                                Label="Detail"
-                                                               Strict="true">
+                                                               Strict="true"
+                                                               @bind-Value="@curPaintUsed.PaintDetail">
                                                         <MudSelectItem Value="@("Base")" />
                                                         <MudSelectItem Value="@("Layer")" />
                                                         <MudSelectItem Value="@("Highlight")" />
