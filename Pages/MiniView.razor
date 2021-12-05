@@ -20,23 +20,20 @@
 
         @foreach (var elem in detailMini.Elements)
         {
-            <div class="col-md-2" style="padding: 10px">
-                <div class="card h-100">
-                    <div class="card-header">
-                        @elem.Name
-                    </div>
-                    <div class="card-body align-items-center d-flex justify-content-center">
-                        <MudTable Items="elem.PaintsUsed">
+            <MudCard>
+                <MudCardHeader>
+                     <MudText Typo="Typo.h5">@elem.Name</MudText>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudTable Items="elem.PaintsUsed">
 
-                            <RowTemplate>
-                                <MudTd >@context.PaintDetail</MudTd>
-                                <MudTd >@context.PaintName</MudTd>
-                            </RowTemplate>
-
-                        </MudTable>
-                    </div>
-                </div>
-            </div>
+                        <RowTemplate>
+                            <MudTd >@context.PaintDetail</MudTd>
+                            <MudTd >@context.PaintName</MudTd>
+                        </RowTemplate>
+                    </MudTable>
+                </MudCardContent>
+            </MudCard>
         }
     </div>
 </div>
