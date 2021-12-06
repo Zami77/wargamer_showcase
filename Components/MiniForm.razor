@@ -17,14 +17,14 @@
         <BlazorInputFile.InputFile OnChange="HandleImageInputChange" />
     </div>
     <div class="row">
-        @if (mini.Image != null && mini.Image.Any())
-        {
-            <img src="@mini.Image" />
-        }
-        else
+        @if (dataUri.Any())
         {
             <img src="@dataUri">
 
+        }
+        else if (mini.Image != null && mini.Image.Any())
+        {
+            <img src="@mini.Image" />
         }
     </div>
     <div class="row">
@@ -125,7 +125,7 @@
 
 @code {
     private IFileListEntry selectedImage;
-    private string dataUri;
+    private string dataUri = "";
     [Parameter]
     public List<Paint> allPaints { get; set; } = new();
     [Parameter]
