@@ -1,23 +1,18 @@
-﻿@inject NavigationManager navManiger 
+﻿@inject NavigationManager navManiger
 
 <div class="@mini.MiniName">
-    <MudCard Style="width: 300px" Class="ma-8 h-90">
+    <MudCard Style="width: 250px" Class="ma-8 h-90">
         <MudCardMedia Image="@mini.Image" Height="200" />
         <MudCardContent>
             <MudText Typo="Typo.h5">@mini.MiniName</MudText>
         </MudCardContent>
         <MudCardActions>
-            <MudButton OnClick="() => ViewMini()"
-                       Color="Color.Primary"
-                       Variant="Variant.Filled">
+            <MudButton OnClick="() => ViewMini()" Color="Color.Primary" Variant="Variant.Filled">
                 Detail View
             </MudButton>
             @if (isUser)
             {
-                <MudButton 
-                   OnClick="() => EditMini()"
-                   Color="Color.Warning"
-                   Variant="Variant.Filled">
+                <MudButton OnClick="() => EditMini()" Color="Color.Warning" Variant="Variant.Filled">
                     Edit Mini
                 </MudButton>
             }
