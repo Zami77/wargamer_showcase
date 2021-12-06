@@ -1,10 +1,10 @@
-﻿<div class="mini-pagination">
-    <div class="card-deck">
+﻿@inject IJSRuntime iJSRuntime
+
+<div class="mini-pagination">
         @foreach (var mini in GetCurrentPage())
         {
             <MiniCard mini="@mini" isUser="@canEdit" />
         }
-    </div>
     <MudPagination Color="Color.Primary"
                    Count="(minis.Count/minisPerPage + (minis.Count % minisPerPage > 0 ? 1 : 0))"
                    @bind-Selected="@_selected" />
@@ -18,7 +18,15 @@
     public bool canEdit { get; set; } = false;
 
     int _selected = 1;
+    int _selectedPrev = 1;
 
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        if (_selected != _selectedPrev) {
+            await iJSRuntime.InvokeVoidAsync("ScrollToTop");
+            _selectedPrev = _selected;
+        }
+    }
     private List<Mini> GetCurrentPage()
     {
         if (minis.Count <= minisPerPage)
