@@ -11,9 +11,7 @@
 
 <div class="@detailMini.MiniName-mini-view">
     <h3> @detailMini.MiniName</h3>
-    <img src="@detailMini.Image"
-         alt="@detailMini.MiniName"
-         style="max-height:400px;max-width:400px;" />
+    <img src="@detailMini.Image" alt="@detailMini.MiniName" style="max-width: 100%;" />
     <p>Game: @detailMini.Game</p>
     <p>Faction: @detailMini.Faction</p>
     <div class="row">
@@ -22,14 +20,19 @@
         {
             <MudCard>
                 <MudCardHeader>
-                     <MudText Typo="Typo.h5">@elem.Name</MudText>
+                    <MudText Typo="Typo.h5">@elem.Name</MudText>
                 </MudCardHeader>
                 <MudCardContent>
                     <MudTable Items="elem.PaintsUsed">
 
                         <RowTemplate>
-                            <MudTd >@context.PaintDetail</MudTd>
-                            <MudTd >@context.PaintName</MudTd>
+                            <MudTd>@context.PaintDetail</MudTd>
+                            <MudTd>@context.PaintName</MudTd>
+                            <MudTd>
+                                <svg width="20" height="20">
+                                    <rect width="20" height="20" style="fill:@context.PaintHex;stroke-width:3;stroke:rgb(0,0,0)" />
+                                </svg>
+                            </MudTd>
                         </RowTemplate>
                     </MudTable>
                 </MudCardContent>
