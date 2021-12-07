@@ -75,6 +75,12 @@
                                                         @foreach (var paint in allPaints)
                                                         {
                                                             <option>@paint.PaintName</option>
+                                                            @if (curPaintUsed.PaintName == paint.PaintName) {
+                                                                curPaintUsed.PaintHex = paint.HexColor;
+                                                                if (!curPaintUsed.PaintHex.Trim().StartsWith("#")) {
+                                                                    curPaintUsed.PaintHex = $"#{curPaintUsed.PaintHex}";
+                                                                }
+                                                            }
                                                         }
                                                     </datalist>
                                                 </MudItem>
