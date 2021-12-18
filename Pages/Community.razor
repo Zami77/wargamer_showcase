@@ -29,7 +29,7 @@
     protected override async Task OnInitializedAsync()
     {
         var responseMinis = await cosmosDbService.GetPublicMinis();
-        PublicMinis = responseMinis.ToList();
+        PublicMinis = responseMinis.OrderByDescending(m => m.Likes.Count).ToList();
     }
 
     protected override async void OnAfterRender(bool firstRender)
