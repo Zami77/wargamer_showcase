@@ -31,7 +31,11 @@ namespace wargamer_showcase.Data
         public List<MiniElement> Elements { get; set; } = new();
         [JsonProperty(PropertyName = "is_public")]
         public bool IsPublic { get; set; } = false;
+        [JsonProperty(PropertyName = "likes")]
+        public List<string> Likes { get; set; } = new();
         [JsonProperty(PropertyName = "category")]
         public String Category { get; set; } = "minis";
+        [JsonProperty(PropertyName = "_ts")]
+        public string TimeStamp { get; set; }
     }
 }

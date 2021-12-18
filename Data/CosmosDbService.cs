@@ -174,7 +174,7 @@ namespace wargamer_showcase.Data
 
         public async Task<IEnumerable<Mini>> GetPublicMinis()
         {
-            var query = "SELECT * FROM c WHERE c.is_public = true";
+            var query = "SELECT * FROM c WHERE c.is_public = true ORDER BY c._ts DESC";
             return await GetMinisAsync(query);
         }
     }

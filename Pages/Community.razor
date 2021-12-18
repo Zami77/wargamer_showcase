@@ -5,17 +5,40 @@
 @inject ILogger<MiniView> logger
 
 <h3>Community Page</h3>
-<div class="community-page" style="h-100">
-    <MiniPagination minis="@PublicMinis" />
-</div>
+<AuthorizeView>
+    <Authorized>
+        @{
+            curUsername = context.User.FindFirst(c => c.Type == "signinname")?.Value ?? "";
+        }
+        <div class="community-page" style="h-100">
+            <MiniPagination minis="@PublicMinis" user="@curUser"/>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <div class="community-page" style="h-100">
+            <MiniPagination minis="@PublicMinis" />
+        </div>
+    </NotAuthorized>
+</AuthorizeView>
 
 @code {
     List<Mini> PublicMinis = new();
-
+    string curUsername = "";
+    User curUser = new();
 
     protected override async Task OnInitializedAsync()
     {
         var responseMinis = await cosmosDbService.GetPublicMinis();
-        PublicMinis = responseMinis.ToList();
+        PublicMinis = responseMinis.OrderByDescending(m => m.Likes.Count).ToList();
+    }
+
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        if (curUsername.Length > 0 && String.IsNullOrWhiteSpace(curUser.Username))
+        {
+            curUser = await cosmosDbService.GetUserByNameAsync(curUsername);
+            logger.LogInformation($"Found user:{curUser.Username}");
+            this.StateHasChanged();
+        }
     }
 }

@@ -3,7 +3,7 @@
 <div class="mini-pagination">
         @foreach (var mini in GetCurrentPage())
         {
-            <MiniCard mini="@mini" isUser="@canEdit" />
+            <MiniCard mini="@mini" isUser="@canEdit" user="@user"/>
         }
     <MudPagination Color="Color.Primary"
                    Count="(minis.Count/minisPerPage + (minis.Count % minisPerPage > 0 ? 1 : 0))"
@@ -16,6 +16,8 @@
     public int minisPerPage { get; set; } = 3;
     [Parameter]
     public bool canEdit { get; set; } = false;
+    [Parameter]
+    public User user { get; set; } = null;
 
     int _selected = 1;
     int _selectedPrev = 1;

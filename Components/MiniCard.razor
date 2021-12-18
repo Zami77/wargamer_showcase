@@ -1,4 +1,5 @@
-﻿@inject NavigationManager navManiger
+﻿@inject NavigationManager navManager
+@inject ICosmosDbService cosmosDbService
 
 <div class="@mini.MiniName">
     <MudCard Class="px-4 ma-8" Style="margin: auto;">
@@ -16,6 +17,8 @@
                     Edit Mini
                 </MudButton>
             }
+            <MudIconButton OnClick="() => Upvote()" Icon="@Icons.Material.Filled.Favorite" Color="GetHeartColor()" />
+            <MudText>@mini.Likes.Count</MudText>
         </MudCardActions>
     </MudCard>
 </div>
@@ -24,14 +27,50 @@
     public Mini mini { get; set; }
     [Parameter]
     public bool isUser { get; set; } = false;
+    [Parameter]
+    public User user { get; set; } = null;
 
     private void EditMini()
     {
-        navManiger.NavigateTo("/miniedit/" + mini.Id);
+        navManager.NavigateTo("/miniedit/" + mini.Id);
     }
 
     private void ViewMini()
     {
-        navManiger.NavigateTo("/miniview/" + mini.Id);
+        navManager.NavigateTo("/miniview/" + mini.Id);
+    }
+
+    private async void Upvote() 
+    {
+        if (user == null || user.Minis.Contains(mini.Id)) 
+        {
+            return;
+        }
+
+        // Already upvoted, need to revert
+        if (user.FavoriteMinis.Contains(mini.Id))
+        {
+            mini.Likes.Remove(user.Id);
+            user.FavoriteMinis.Remove(mini.Id);
+        }
+        // Upvoting, need to add
+        else
+        {
+            mini.Likes.Add(user.Id);
+            user.FavoriteMinis.Add(mini.Id);
+        }
+
+        await cosmosDbService.UpdateMiniAsync(mini);
+        await cosmosDbService.UpdateUserAsync(user);
+    }
+
+    private Color GetHeartColor() 
+    {
+        if (user == null || user.Minis.Contains(mini.Id) || !user.FavoriteMinis.Contains(mini.Id))
+        {
+            return Color.Default;
+        }
+
+        return Color.Secondary;
     }
 }
