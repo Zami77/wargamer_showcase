@@ -239,6 +239,7 @@
             elem.PaintsUsed.RemoveAll(nullPaint);
             elem.Notes = elem.Notes.Trim();
         }
+        mini.CreatedBy = curUser.Username;
 
         return false;
     }

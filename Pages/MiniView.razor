@@ -10,7 +10,16 @@
 @inject ILogger<MiniView> logger
 
 <div class="@detailMini.MiniName-mini-view">
-    <h3> @detailMini.MiniName</h3>
+    <h3> 
+        @detailMini.MiniName
+    </h3>
+    @if (!String.IsNullOrWhiteSpace(detailMini.CreatedBy))
+    {
+        <h4>
+            by @detailMini.CreatedBy
+        </h4>
+    }
+    
     <img src="@detailMini.Image" alt="@detailMini.MiniName" style="max-width: 90%; margin: auto;" />
     <p>Game: @detailMini.Game</p>
     <p>Faction: @detailMini.Faction</p>

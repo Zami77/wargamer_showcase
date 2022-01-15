@@ -35,6 +35,8 @@ namespace wargamer_showcase.Data
         public List<string> Likes { get; set; } = new();
         [JsonProperty(PropertyName = "category")]
         public String Category { get; set; } = "minis";
+        [JsonProperty(PropertyName = "created_by")]
+        public string CreatedBy { get; set; } = "";
         [JsonProperty(PropertyName = "_ts")]
         public string TimeStamp { get; set; }
     }
