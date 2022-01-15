@@ -1,0 +1,11 @@
+.paint-card {
+    width: 80%;
+    margin: auto;
+}
+@media (min-width: 641px) {
+    .paint-card {
+        width: 30%;
+        padding: 1px;
+        margin: auto;
+    }
+}
