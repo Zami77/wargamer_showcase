@@ -21,7 +21,7 @@
             <div class="paint-card">
                 <MudCard>
                     <MudCardHeader>
-                        <MudText Typo="Typo.h5">@elem.Name</MudText>
+                        <MudText Typo="Typo.h5"><b>@elem.Name</b></MudText>
                     </MudCardHeader>
                     <MudCardContent>
                         <MudTable Items="elem.PaintsUsed">
@@ -36,6 +36,11 @@
                                 </MudTd>
                             </RowTemplate>
                         </MudTable>
+                        @if (!String.IsNullOrWhiteSpace(elem.Notes))
+                        {
+                            <MudText><b>Notes</b></MudText>
+                            <MudText Style="white-space: pre-wrap">@elem.Notes</MudText>
+                        }             
                     </MudCardContent>
                 </MudCard>
             </div>

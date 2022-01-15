@@ -87,6 +87,14 @@
                                             </MudGrid>
                                         </div>
                                     }
+                                    <div class="notes input">
+                                        <MudTextField Label="Element Notes" 
+                                            T="string" 
+                                            Variant="Variant.Outlined" 
+                                            @bind-Value="@elem.Notes" 
+                                            Lines="2" 
+                                        />
+                                    </div>
                                     <MudButton Variant="Variant.Filled"
                                                Color="Color.Primary"
                                                type="button"
@@ -171,6 +179,7 @@
             _processing = false;
             return;
         }
+
         var imgUri = "";
         if (selectedImage != null)
         {
@@ -228,6 +237,7 @@
             Predicate<MiniElementPaint> nullPaint =
                 delegate (MiniElementPaint pnt) { return String.IsNullOrWhiteSpace(pnt.PaintName); };
             elem.PaintsUsed.RemoveAll(nullPaint);
+            elem.Notes = elem.Notes.Trim();
         }
 
         return false;
