@@ -41,10 +41,10 @@
     string curUsername = "";
     User curUser = new();
     static string[] sortOptions = new string[] {
-    "Newest",
-    "Most Liked"
+    "Most Liked",
+    "Newest"
     };
-    string curSort = sortOptions.First();
+    string curSort = sortOptions[0];
 
     protected override async Task OnInitializedAsync()
     {
