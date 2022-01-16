@@ -37,6 +37,8 @@ namespace wargamer_showcase.Data
         public String Category { get; set; } = "minis";
         [JsonProperty(PropertyName = "created_by")]
         public string CreatedBy { get; set; } = "";
+        [JsonProperty(PropertyName = "created_time")]
+        public double CreatedTime { get; set; } = 0;
         [JsonProperty(PropertyName = "_ts")]
         public string TimeStamp { get; set; }
     }

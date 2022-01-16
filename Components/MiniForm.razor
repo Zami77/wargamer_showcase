@@ -217,6 +217,7 @@
             return;
         }
 
+        mini.CreatedTime = (DateTime.UtcNow - new DateTime(1970,1,1,0,0,0)).TotalSeconds;
         await cosmosDbService.AddMiniAsync(mini);
         curUser.Minis.Add(mini.Id);
         await cosmosDbService.UpdateUserAsync(curUser);

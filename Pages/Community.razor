@@ -80,7 +80,7 @@
 
     private void SortByNewest()
     {
-        PublicMinis = PublicMinis.OrderByDescending(m => m.TimeStamp).ToList();
+        PublicMinis = PublicMinis.OrderByDescending(m => m.CreatedTime).ToList();
         this.StateHasChanged();
     }
 
