@@ -41,8 +41,8 @@
     string curUsername = "";
     User curUser = new();
     static string[] sortOptions = new string[] {
-    "Most Liked",
-    "Newest"
+    "Newest",
+    "Most Liked"
     };
     string curSort = sortOptions[0];
 
@@ -80,13 +80,13 @@
 
     private void SortByNewest()
     {
-        PublicMinis = PublicMinis.OrderByDescending(m => m.CreatedTime).ToList();
+        PublicMinis = PublicMinis.OrderByDescending(m => m.Likes.Count).OrderByDescending(m => m.CreatedTime).ToList();
         this.StateHasChanged();
     }
 
     private void SortByLikes()
     {
-        PublicMinis = PublicMinis.OrderByDescending(m => m.Likes.Count).ToList();
+        PublicMinis = PublicMinis.OrderByDescending(m => m.CreatedTime).OrderByDescending(m => m.Likes.Count).ToList();
         this.StateHasChanged();
     }
 }
