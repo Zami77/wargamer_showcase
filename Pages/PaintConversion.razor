@@ -1,6 +1,7 @@
 ﻿@page "/paintconverter"
 @using Microsoft.Identity.Web
 @using Microsoft.Extensions.Options
+@using System.Globalization
 @inject IOptionsMonitor<MicrosoftIdentityOptions> microsoftIdentityOptions
 @inject ICosmosDbService cosmosDbService
 @inject ILogger<PaintConversion> logger
@@ -25,19 +26,28 @@
     <h3>
         Converted Paints
     </h3>
-    <table border="1">
-        <tr>
-            <td>Company</td>
-            <td>Paint</td>
-        </tr>
-        @foreach(var paint in convertedPaints)
-        {
+    <MudSimpleTable Hover="true" Bordered="true">
+        <thead>
             <tr>
-                <td>@paint.Company</td>
-                <td>@paint.PaintName</td>
+                <td>Company</td>
+                <td>Paint</td>
             </tr>
-        }
-    </table>
+        </thead>
+        <tbody>
+            @foreach(var paint in convertedPaints)
+            {
+                <tr>
+                    <td>@paint.Company</td>
+                    <td>@paint.PaintName</td>
+                    <td>
+                        <svg width="20" height="20">
+                            <rect width="20" height="20" style="fill:@RGBify(paint.HexColor);stroke-width:3;stroke:rgb(0,0,0)" />
+                        </svg>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </MudSimpleTable>
 }
 @code {
     List<Paint> allPaints = new();
@@ -45,6 +55,7 @@
     Paint foundPaint = new();
     List<Paint> convertedPaints = new();
     bool paintConverted = false;
+    const int hexDelta = 8000;
 
     protected override async Task OnInitializedAsync()
     {
@@ -64,8 +75,39 @@
         foundPaint = new();
         convertedPaints = new();
         foundPaint = selectedPaint;
-        convertedPaints = allPaints.FindAll(p => p.HexColor == foundPaint.HexColor);
+        var foundPaintHex = -1;
+        foundPaintHex = int.TryParse(CleanHex(foundPaint.HexColor), NumberStyles.HexNumber, null, out foundPaintHex) ? foundPaintHex : -1;
+        Predicate<Paint> similarPaints =
+                delegate (Paint pnt) {
+                    var checkHex = -1;
+                    checkHex = int.TryParse(CleanHex(pnt.HexColor), NumberStyles.HexNumber, null, out checkHex) ? checkHex : -2;
+                    return Math.Abs(foundPaintHex - checkHex) <= hexDelta;
+                };
+        convertedPaints = allPaints.FindAll(similarPaints);
         selectedPaint = new();
         paintConverted = true;
+    }
+
+    private string CleanHex(string hexString) {
+        if (hexString.Length <= 1) {
+            return hexString;
+        }
+        if (hexString[0] == '#') {
+            return hexString.Remove(0, 1);
+        }
+        return hexString;
+    }
+
+    private string RGBify(string hexString)
+    {
+        if (hexString.Length <= 1)
+        {
+            return hexString;
+        }
+        if (hexString[0] != '#')
+        {
+            return "#" + hexString;
+        }
+        return hexString;
     }
 }

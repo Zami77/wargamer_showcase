@@ -5,6 +5,21 @@
 @inject ILogger<MiniView> logger
 
 <h3>Community Page</h3>
+<div class="row">
+    <div style="width:25%"></div>
+    <div style="width: 25%; margin: auto;">
+        <MudSelect T="string" @bind-Value="curSort" Label="Sort By" AnchorOrigin="Origin.BottomCenter">
+            @foreach (var sort in sortOptions)
+            {
+                <MudSelectItem OnClick="SortMinis" Value="@sort">@sort</MudSelectItem>
+            }
+        </MudSelect>
+    </div>
+    <div style="width: 25%; margin: auto; margin-bottom: 0px;">
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="SortMinis">Sort</MudButton>
+    </div>
+</div>
+
 <AuthorizeView>
     <Authorized>
         @{
@@ -25,11 +40,17 @@
     List<Mini> PublicMinis = new();
     string curUsername = "";
     User curUser = new();
+    static string[] sortOptions = new string[] {
+    "Newest",
+    "Most Liked"
+    };
+    string curSort = sortOptions.First();
 
     protected override async Task OnInitializedAsync()
     {
         var responseMinis = await cosmosDbService.GetPublicMinis();
-        PublicMinis = responseMinis.OrderByDescending(m => m.Likes.Count).ToList();
+        PublicMinis = responseMinis.ToList();
+        SortMinis();
     }
 
     protected override async void OnAfterRender(bool firstRender)
@@ -40,5 +61,32 @@
             logger.LogInformation($"Found user:{curUser.Username}");
             this.StateHasChanged();
         }
+    }
+
+    private void SortMinis()
+    {
+        switch (curSort) {
+            case "Newest":
+                SortByNewest();
+                break;
+            case "Most Liked":
+                SortByLikes();
+                break;
+            default:
+                SortByNewest();
+                break;
+        }
+    }
+
+    private void SortByNewest()
+    {
+        PublicMinis = PublicMinis.OrderByDescending(m => m.CreatedTime).ToList();
+        this.StateHasChanged();
+    }
+
+    private void SortByLikes()
+    {
+        PublicMinis = PublicMinis.OrderByDescending(m => m.Likes.Count).ToList();
+        this.StateHasChanged();
     }
 }
