@@ -33,7 +33,7 @@
             curUser = await cosmosDbService.GetUserByNameAsync(curUsername);
             logger.LogInformation($"Found user:{curUser.Username}");
             var responseMinis = await cosmosDbService.GetMinisForUser(curUser.Minis);
-            userMinis = responseMinis.OrderByDescending(m => m.TimeStamp).ToList();
+            userMinis = responseMinis.OrderByDescending(m => m.CreatedTime).ToList();
             this.StateHasChanged();
         }
     }
