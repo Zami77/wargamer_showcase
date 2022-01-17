@@ -35,6 +35,20 @@
     "category": "paints"
   },
   {
+    "id": "Armageddon Dust",
+    "paint_name": "Armageddon Dust",
+    "company": "New Citadel",
+    "hex_color": "#D2AD00",
+    "category": "paints"
+  },
+  {
+    "id": "Armageddon Dunes",
+    "paint_name": "Armageddon Dunes",
+    "company": "New Citadel",
+    "hex_color": "#D2AD00",
+    "category": "paints"
+  },
+  {
     "id": "Hexwraith Flame",
     "paint_name": "Hexwraith Flame",
     "company": "New Citadel",
